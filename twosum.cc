@@ -76,13 +76,13 @@ public:
         int d = 0;
         for (int i = 0; i < n; ++i) {
             d = target - nums[i];
-            cout << d << " " << i << " " << endl;
-            if (diffs.find(nums[i]) != diffs.end()) {
-                ret.push_back(diffs[nums[i]]);
+            //cout << d << " " << i << " " << endl;
+            if (diffs.find(d) != diffs.end()) {
+                ret.push_back(diffs[d]);
                 ret.push_back(i);
                 return ret;
             }
-            diffs[d] = i;
+            diffs[nums[i]] = i;
         }
         return ret;
     }
