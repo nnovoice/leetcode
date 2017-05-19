@@ -33,6 +33,21 @@ private:
     }    
 
 public:
+    vector<int> twoSumBruteforce(vector<int>& nums, int target) {
+        int n = nums.size();
+        vector<int> ret;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                if (nums[i] + nums[j] == target) {
+                    ret.push_back(i+1);
+                    ret.push_back(j+1);
+                    return ret;
+                }
+            }
+        }
+        return ret;
+    }
+
     vector<int> twoSum(vector<int>& nums, int target) {
         //assert(nums.size() >= 2);
         sort(nums.begin(), nums.end());
@@ -96,11 +111,31 @@ void test4() {
     assert(v1[0] == 20 && v1[1] == 20);
 }
 
+void test1Bruteforce() {
+    Solution s;
+    int myints[] = {20, -1, 1, 10, 5, 12, 17, 3, 2, 90};
+    std::vector<int> v (myints, myints + sizeof(myints) / sizeof(int) );
+    std::vector<int> v1 (s.twoSumBruteforce(v, 17));
+    printVector(v1);
+    assert(v1[0] == 5 && v1[1] == 6); // 1 based index
+}
+
+void test2Bruteforce() {
+    Solution s;
+    int myints[] = {3, 2, 4};
+    std::vector<int> v (myints, myints + sizeof(myints) / sizeof(int) );
+    std::vector<int> v1 (s.twoSumBruteforce(v, 6));
+    printVector(v1);
+    assert(v1[0] == 2 && v1[1] == 3); // 1 based index
+}
+
 int main()
 {
-    test1();
-    test2(); 
-    test3();   
-    test4();
+    //test1();
+    //test2(); 
+    //test3();   
+    //test4();
+    test1Bruteforce();
+    test2Bruteforce();
     return 0;
 }
