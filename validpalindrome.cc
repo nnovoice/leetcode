@@ -9,19 +9,20 @@ public:
     bool isPalindrome(string s) {
         char a = ' ', b = ' ';
         int l = 0, r = s.length() - 1;
-        cout << l << " " << r << endl;
-        while (l <= r) {
-        	while (isalnum(s[l]) == false) ++l;
-        	while (isalnum(s[r]) == false) --r;
+        //cout << l << " " << r << endl;
+        while (l <  r) {
+        	while (l < r && isalnum(s[l]) == false) ++l;
+        	while (l < r && isalnum(s[r]) == false) --r;
 
-        	if (l > r) return false;
+        	//if (l > r) return false;
 
-        	a = tolower(s[l]);
+        	a = tolower(s[l]); // tolower of a non alphanumeric char does not change it.
         	b = tolower(s[r]);
 
-        	cout << a << " " << b << endl;
+        	//cout << a << " " << b << endl;
 
         	if (a != b) return false;
+
         	++l;
         	--r;
         }
@@ -56,7 +57,12 @@ void test4() {
 
 void test5() {
 	Solution s;
-	assert(s.isPalindrome(" ") == false);
+	assert(s.isPalindrome(" ") == true);
+}
+
+void test6() {
+	Solution s;
+	assert(s.isPalindrome("     ") == true);
 }
 
 int main() {
@@ -65,5 +71,7 @@ int main() {
 	test2();
 	test3();
 	test4();
+	test5();
+	test6();
 	return 0;
 }
