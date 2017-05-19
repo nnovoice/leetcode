@@ -10,11 +10,13 @@ You may assume that each input would have exactly one solution, and you may not 
 #include <vector>
 #include <algorithm>
 #include <cassert>
+#include <unordered_map>
 using namespace std;
 
 class Solution {
 private:
-    int binSearch(vector<int>& nums, int low, int high, int val) {
+    int binSearch(vector<int>& nums, int low, int n, int val) {
+        int high = n - 1;
         int mid = 0;
         while (low <= high) {
             mid = low + (high - low) / 2;
@@ -39,8 +41,8 @@ public:
         for (int i = 0; i < n; ++i) {
             for (int j = i + 1; j < n; ++j) {
                 if (nums[i] + nums[j] == target) {
-                    ret.push_back(i+1);
-                    ret.push_back(j+1);
+                    ret.push_back(i);
+                    ret.push_back(j);
                     return ret;
                 }
             }
@@ -48,7 +50,7 @@ public:
         return ret;
     }
 
-    vector<int> twoSum(vector<int>& nums, int target) {
+    vector<int> twoSumUsingBinarySearch(vector<int>& nums, int target) {
         //assert(nums.size() >= 2);
         sort(nums.begin(), nums.end());
         vector<int> r;
@@ -57,7 +59,7 @@ public:
         int k = 0, j = 0;
         for (int i = 0; i < n; ++i) {
             k = target - nums[i];
-            j = binSearch(nums, i + 1, n - 1, k);
+            j = binSearch(nums, i + 1, n, k);
             if (i != j && j != -1) {
                 r.push_back(nums[i]);
                 r.push_back(nums[j]);
@@ -66,9 +68,28 @@ public:
         }
         return r;
     }
+
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        std::vector<int> ret;
+        unordered_map<int, int> diffs;
+        int d = 0;
+        for (int i = 0; i < n; ++i) {
+            d = target - nums[i];
+            cout << d << " " << i << " " << endl;
+            if (diffs.find(nums[i]) != diffs.end()) {
+                ret.push_back(diffs[nums[i]]);
+                ret.push_back(i);
+                return ret;
+            }
+            diffs[d] = i;
+        }
+        return ret;
+    }
 };
 
 void printVector(std::vector<int>& v) {
+    cout << "printVector\n";
     for (size_t i = 0; i < v.size(); ++i) {
         cout << v[i] << " ";
     }
@@ -81,7 +102,7 @@ void test1() {
     std::vector<int> v (myints, myints + sizeof(myints) / sizeof(int) );
     std::vector<int> v1 (s.twoSum(v, 17));
     printVector(v1);
-    assert(v1[0] == 0 && v1[1] == 17);
+    assert(v1[0] == 4 && v1[1] == 5); // these are indicies of the elements
 }
 
 void test2() {
@@ -90,7 +111,7 @@ void test2() {
     std::vector<int> v (myints, myints + sizeof(myints) / sizeof(int) );
     std::vector<int> v1 (s.twoSum(v, 17));
     printVector(v1);
-    assert(v1[0] == 5 && v1[1] == 12);
+    assert(v1[0] == 4 && v1[1] == 5); // these are indicies of the elements
 }
 
 void test3() {
@@ -99,7 +120,7 @@ void test3() {
     std::vector<int> v (myints, myints + sizeof(myints) / sizeof(int) );
     std::vector<int> v1 (s.twoSum(v, 19));
     printVector(v1);
-    assert(v1[0] == -1 && v1[1] == 20);
+    assert(v1[0] == 0 && v1[1] == 1);
 }
 
 void test4() {
@@ -108,7 +129,7 @@ void test4() {
     std::vector<int> v (myints, myints + sizeof(myints) / sizeof(int) );
     std::vector<int> v1 (s.twoSum(v, 20));
     printVector(v1);
-    assert(v1[0] == 20 && v1[1] == 20);
+    assert(v1.size() == 0);
 }
 
 void test1Bruteforce() {
@@ -131,10 +152,10 @@ void test2Bruteforce() {
 
 int main()
 {
-    //test1();
-    //test2(); 
-    //test3();   
-    //test4();
+    test1();
+    test2(); 
+    test3();   
+    test4();
     test1Bruteforce();
     test2Bruteforce();
     return 0;
