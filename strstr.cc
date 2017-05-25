@@ -10,8 +10,7 @@ public:
 		int n = needle.length();
 
 		if (n == 0) {
-			if (h == 0) return 0;
-			return -1;
+			return 0;
 		}
 
 		if (h < n) return -1;
@@ -86,7 +85,7 @@ void test5() {
 	string n = "";
 	int index = s.strStr(h, n);
 	cout << h << " " << n << " " << index << endl;
-	assert(index == -1);
+	assert(index == 0);
 }
 
 void test6() {
