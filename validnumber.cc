@@ -31,16 +31,21 @@ public:
     	}
     	
     	if (i < n && s[i] == '.') ++i;
+    	while (i < n && isdigit(s[i])) { 
+    		++i;
+    		isNumeric = true;
+    	}
     	
     	if (i < n && s[i] == 'e' && isNumeric) {
     		isNumeric = false;
     		++i;
     		if (i < n && (s[i] == '+' || s[i] == '-')) ++i;
+    		while (i < n && isdigit(s[i])) { 
+	    		++i;
+	    		isNumeric = true;
+	    	}
     	}
-    	while (i < n && isdigit(s[i])) { 
-    		++i;
-    		isNumeric = true;
-    	}
+    	
     	while (i < n && s[i] == ' ') ++i;
     	
     	return isNumeric && (i == n);
@@ -179,7 +184,7 @@ void test18() {
 	assert(b == false);	
 }
 
-void test18() {
+void test19() {
 	string s = ".2e81";
 	Solution sol;
 	bool b = sol.isNumber(s);
@@ -207,5 +212,6 @@ int main() {
 	test16();
 	test17();
 	test18();
+	test19();
 	return 0;
 }
