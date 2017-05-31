@@ -13,10 +13,12 @@ int myAtoi(string s) {
 	int n = s.length();
 	int sign = 1, digit = 0;
 	long long num = 0;
-	bool plusFound = false, minusFound = false;
+	bool plusFound = false, minusFound = false, digitFound = false;
 	for (int i = 0; i < n; ++i) {
-		//cout << s[i];
-		if (s[i] == ' ') continue;
+		if (s[i] == ' ') {
+			if (plusFound || minusFound || digitFound) return 0;
+			continue;
+		}
 		if (s[i] == '+') { 
 			if (plusFound) return 0;
 			if (minusFound) return 0;
@@ -31,7 +33,9 @@ int myAtoi(string s) {
 			continue; 
 		}
 		if (isdigit(s[i]) == false) 
-			break;
+			return 0;
+		
+		digitFound = true;
 		
 		num *= 10;
 		digit = s[i] - '0';
@@ -104,6 +108,27 @@ void test8() {
 	assert(a == 0);	
 }
 
+void test9() {
+	string s = " +2 909";
+	int a = myAtoi(s);
+	cout << a << endl;
+	assert(a == 0);	
+}
+
+void test10() {
+	string s = " 2 909";
+	int a = myAtoi(s);
+	cout << a << endl;
+	assert(a == 0);	
+}
+
+void test11() {
+	string s = " 2$909";
+	int a = myAtoi(s);
+	cout << a << endl;
+	assert(a == 0);	
+}
+
 void findOverflow() {
 	int m = 214748364;
 	int n = 0;
@@ -130,5 +155,8 @@ int main() {
 	test5();
 	test6();
 	test7();
+	test8();
+	test9();
+	test10();
 	return 0;
 }
