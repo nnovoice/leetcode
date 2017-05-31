@@ -10,6 +10,7 @@ using namespace std;
 
 int myAtoi(string s) {
 	const long long MAX = (long long) 2147483647;
+	const long long MIN = (long long) -2147483648;
 	int n = s.length();
 	int sign = 1, digit = 0;
 	long long num = 0;
@@ -33,7 +34,7 @@ int myAtoi(string s) {
 			continue; 
 		}
 		if (isdigit(s[i]) == false) 
-			return 0;
+			break;
 		
 		digitFound = true;
 		
@@ -42,8 +43,8 @@ int myAtoi(string s) {
 		num += digit;
 		//cout << "num= " << num << " " << digit << " " << (MAX - num) << endl;
 			
-		if (sign == 1 && num > MAX) return 0;
-		if (sign == -1 && num > MAX + 1) return 0; // num remains +ve until later (so compare against 2147483648)
+		if (sign == 1 && num > MAX) return MAX;
+		if (sign == -1 && num > MAX + 1) return MIN; // num remains +ve until later (so compare against 2147483648)
 	}
 
 	return (int) (num * sign);
@@ -65,13 +66,13 @@ void test1() {
 void test2() {
 	string s = "2147483648";
 	int a = myAtoi(s);
-	assert(a == 0);	
+	assert(a == 2147483647);	
 }
 void test3() {
 	string s = "-2147483649";
 	int a = myAtoi(s);
 	cout << a << endl;
-	assert(a == 0);	
+	assert(a == -2147483648);	
 }
 void test4() {
 	string s = "           +2147483647";
@@ -84,7 +85,7 @@ void test5() {
 	string s = "           +2147483648            ";
 	int a = myAtoi(s);
 	cout << a << endl;
-	assert(a == 0);	
+	assert(a == 2147483647);	
 }
 
 void test6() {
@@ -126,7 +127,14 @@ void test11() {
 	string s = " 2$909";
 	int a = myAtoi(s);
 	cout << a << endl;
-	assert(a == 0);	
+	assert(a == 2);	
+}
+
+void test12() {
+	string s = "  -0012a42";
+	int a = myAtoi(s);
+	cout << a << endl;
+	assert(a == -12);	
 }
 
 void findOverflow() {
@@ -158,5 +166,7 @@ int main() {
 	test8();
 	test9();
 	test10();
+	test11();
+	test12();
 	return 0;
 }
