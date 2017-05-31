@@ -32,7 +32,7 @@ public:
     	
     	if (i < n && s[i] == '.') ++i;
     	
-    	if (i < n && s[i] == 'e') {
+    	if (i < n && s[i] == 'e' && isNumeric) {
     		isNumeric = false;
     		++i;
     		if (i < n && (s[i] == '+' || s[i] == '-')) ++i;
@@ -149,8 +149,43 @@ void test14() {
 	string s = "  .e12";
 	Solution sol;
 	bool b = sol.isNumber(s);
+	assert(b == false);	
+}
+
+void test15() {
+	string s = "  12.";
+	Solution sol;
+	bool b = sol.isNumber(s);
 	assert(b == true);	
 }
+
+void test16() {
+	string s = "  .";
+	Solution sol;
+	bool b = sol.isNumber(s);
+	assert(b == false);	
+}
+
+void test17() {
+	string s = "e9";
+	Solution sol;
+	bool b = sol.isNumber(s);
+	assert(b == false);	
+}
+void test18() {
+	string s = "1e.9";
+	Solution sol;
+	bool b = sol.isNumber(s);
+	assert(b == false);	
+}
+
+void test18() {
+	string s = ".2e81";
+	Solution sol;
+	bool b = sol.isNumber(s);
+	assert(b == true);	
+}
+
 
 int main() {
 	test0();
@@ -168,5 +203,9 @@ int main() {
 	test12();
 	test13();
 	test14();
+	test15();
+	test16();
+	test17();
+	test18();
 	return 0;
 }
