@@ -17,7 +17,7 @@ int myAtoi(string s) {
 	bool plusFound = false, minusFound = false, digitFound = false;
 	for (int i = 0; i < n; ++i) {
 		if (s[i] == ' ') {
-			if (plusFound || minusFound || digitFound) return 0;
+			if (plusFound || minusFound || digitFound) break;
 			continue;
 		}
 		if (s[i] == '+') { 
@@ -113,14 +113,14 @@ void test9() {
 	string s = " +2 909";
 	int a = myAtoi(s);
 	cout << a << endl;
-	assert(a == 0);	
+	assert(a == 2);	
 }
 
 void test10() {
 	string s = " 2 909";
 	int a = myAtoi(s);
 	cout << a << endl;
-	assert(a == 0);	
+	assert(a == 2);	
 }
 
 void test11() {
