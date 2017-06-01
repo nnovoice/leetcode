@@ -24,6 +24,7 @@ public:
         paths[0][0] = 1;
         for (int r = 0; r < m; ++r) {
         	for (int c = 0; c < n; ++c) {
+        		if (r == 0 && c == 0) continue;
         		l = c - 1;
         		t = r - 1;
         		pl = (l >= 0) ? paths[r][l] : 0;
@@ -58,8 +59,21 @@ void test1() {
 void test2() {
 	Solution sol;
 	int res = sol.uniquePaths(3, 3);
-	assert (res == 9);
+	assert (res == 6);
 }
+
+void test3() {
+	Solution sol;
+	int res = sol.uniquePaths(4, 4);
+	assert (res == 20);
+}
+
+void test4() {
+	Solution sol;
+	int res = sol.uniquePaths(4, 5);
+	assert (res == 35);
+}
+
 
 /*void test0_recursive() {
 	Solution sol;
@@ -77,6 +91,8 @@ int main() {
 	test0();
 	test1();
 	test2();
+	test3();
+	test4();
 	/*test0_recursive();
 	test1_recursive();*/
 	return 0;
