@@ -14,9 +14,16 @@ using namespace std;
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        int max = INT_MIN;
+        int max = nums[0];
         int n = nums.size();
-        int acc = 0;
+        int acc = nums[0];
+        for (int i = 1; i < n; ++i) {
+        	if (max < nums[i]) max = nums[i];
+        }
+        
+        if (max < 0) return max;
+
+        max = nums[0];
         for (int i = 0; i < n; ++i) {
         	if ((acc + nums[i]) <= 0) acc = 0;
         	else acc += nums[i];
