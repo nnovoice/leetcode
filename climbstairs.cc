@@ -5,17 +5,16 @@ using namespace std;
 class Solution {
 public:
     int climbStairs(int n) {
-        int *p = new int[n+1];
-        p[0] = 0;
-        p[1] = 1;
-        p[2] = 2;
-        for (int i = 3; i <= n; ++i) {
-            p[i] = p[i-1] + p[i-2];
+        int t = 0;
+        // 1, [1, 2, 3, 5, 8, ...]
+        int f0 = 1;
+        int f1 = 1;
+        for (int i = 2; i <= n; ++i) {
+        	t = f0;
+        	f0 = f1;
+        	f1 = f0 + t;
         }
-        int res = p[n];
-        delete p;
-        return res;
-        
+        return f1;
     }
 };
 
