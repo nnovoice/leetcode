@@ -13,7 +13,20 @@ using namespace std;
 
 class Solution {
 public:
-    int maxSubArray(vector<int>& nums) {
+	int maxSubArray(vector<int>& nums) {
+		int n = nums.size();
+        int max = nums[0];
+        vector<int> sums (n);
+        sums[i] = max;
+
+        for (int i = 1; i < n; ++i) {
+        	sums[i] = nums[i] + (((sums[i - 1] + nums[i]) < 0) ? 0 : sums[i - 1]);
+        	if (max < sums[i]) max = sums[i];
+        }
+        return max;
+    }
+    
+    int maxSubArrayIter(vector<int>& nums) {
         int max = nums[0];
         int n = nums.size();
         
