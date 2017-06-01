@@ -16,7 +16,7 @@ public:
     int maxSubArray(vector<int>& nums) {
         int max = nums[0];
         int n = nums.size();
-        int acc = nums[0];
+        
         for (int i = 1; i < n; ++i) {
         	if (max < nums[i]) max = nums[i];
         }
@@ -24,7 +24,8 @@ public:
         if (max < 0) return max;
 
         max = nums[0];
-        for (int i = 0; i < n; ++i) {
+        int acc = nums[0];
+        for (int i = 1; i < n; ++i) {
         	if ((acc + nums[i]) <= 0) acc = 0;
         	else acc += nums[i];
         	if (max < acc) max = acc;
@@ -57,9 +58,27 @@ void test2() {
 	assert (res == -2);
 }
 
+void test3() {
+	int arr[] = {2};
+	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
+	Solution sol;
+	int res = sol.maxSubArray(v);
+	assert (res == 2);
+}
+
+void test4() {
+	int arr[] = {-2, 1};
+	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
+	Solution sol;
+	int res = sol.maxSubArray(v);
+	assert (res == 1);
+}
+
 int main() {
 	test0();
 	test1();
 	test2();
+	test3();
+	test4();
 	return 0;
 }
