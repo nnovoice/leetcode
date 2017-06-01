@@ -25,8 +25,12 @@ public:
 
         max = nums[0];
         int acc = nums[0];
+        if (acc < 0) { 
+        	acc = 0; 
+        	max = 0; 
+        }
         for (int i = 1; i < n; ++i) {
-        	if ((acc + nums[i]) <= 0) acc = 0;
+        	if ((acc + nums[i]) < 0) acc = 0;
         	else acc += nums[i];
         	if (max < acc) max = acc;
         }
