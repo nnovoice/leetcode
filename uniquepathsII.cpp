@@ -33,12 +33,14 @@ public:
         		t = r - 1;
 
 				paths[r][c] = 0;
-        		if ( l >= 0 && obstacleGrid[r][l] != 1) {
-        			paths[r][c] += paths[r][l];	
-        		}
+				if (obstacleGrid[r][c] != 1) {
+	        		if ( l >= 0 && obstacleGrid[r][l] != 1) {
+	        			paths[r][c] += paths[r][l];	
+	        		}
 
-        		if (t >= 0 && obstacleGrid[t][c] != 1) {
-        			paths[r][c] += paths[t][c];
+	        		if (t >= 0 && obstacleGrid[t][c] != 1) {
+	        			paths[r][c] += paths[t][c];
+	        		}
         		}
         	}
         }
@@ -117,6 +119,14 @@ void test4() {
 	assert (res == 35);
 }
 
+void test5() {
+	Solution sol;
+	vector<vector<int> > vv (1, vector<int> (2, 0));
+	vv[0][1] = 1;
+	int res = sol.uniquePathsWithObstacles(vv);
+	assert (res == 0);
+}
+
 
 /*void test0_recursive() {
 	Solution sol;
@@ -139,6 +149,7 @@ int main() {
 	test2_1();
 	test3();
 	test4();
+	test5();
 	/*test0_recursive();
 	test1_recursive();*/
 	return 0;
