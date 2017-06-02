@@ -1,4 +1,5 @@
 #include <vector>
+#include <stack>
 #include <iostream>
 #include <cassert>
 using namespace std;
@@ -19,33 +20,30 @@ public:
         if (n == 1) return nums[0];
         int cycles = (n % 2 == 0) ? 2 : 3;
         int maxloot = 0, loot = 0;
-        int j = 0;
+        stack<int> left;
+        stack<int> right;
+        int l = 0, r = 0;
         for (int i = 0; i < cycles; ++i) {
-        	
-        	vector<string> dir;
-        	dir.push_back("left");
-        	dir.push_back("right");
-
-        	for (int k = 0; k < dir.size(); ++k) {
-        		loot = nums[i];
-        		if (dir[k] == "left")
-        			j = (i - 2) % n;
-        		else
-	        		j = (i + 2) % n;
-	        	while (1) {
-	        		if (cycles == 2 && j == i) break;
-	        		if (cycles == 3) {
-	        			if (dir[k] == "right" && ((j + 1) % n) == i) break;
-	        			else if ((j - 1) % n == i) break;
-					}
-	        		loot += nums[j];
-	        		if (dir[k] == "left")
-        				j = (j - 2) % n;
-        			else
-	        			j = (i + 2) % n;
-	        	}
-	        	if (maxloot < loot) maxloot = loot; 
-	        }
+        	// need to do this to wrap the -ve index back to +ve
+        	l = (n + (i - 2) % n) % n; 
+        	r = (i + 2) % n;
+        	while (1) {
+        		if (cycles == 3 && (((r + 1) % n) == i)) break;
+        		if (cycles == 2 && r == i) break;
+        		cout << "cycles=" << cycles << " n=" << n << " i=" << i << " l=" << l << " r=" << r << endl;
+        		left.push(l);
+        		right.push(r);
+        		l = (n + (l - 2) % n) % n;
+        		r = (r + 2) % n;
+        	}
+        	int lloot = nums[i], rloot = nums[i];
+        	while (left.empty() == false) {
+        		lloot += nums[left.top()];
+        		rloot += nums[right.top()];
+        		left.pop();
+        		right.pop();
+        	}
+        	maxloot = max(maxloot, max(lloot, rloot));
         }
         return maxloot;
     }
@@ -121,7 +119,15 @@ void test8() {
 	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
 	Solution sol;
 	int res = sol.rob(v);
-	assert (res == 103);
+	assert (res == 103);	
+}
+
+void test9() {
+	int arr[] = {1,2,3,4,5,1,2,3,4,5};
+	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
+	Solution sol;
+	int res = sol.rob(v);
+	assert (res == 16);
 }
 
 int main() {
@@ -134,5 +140,6 @@ int main() {
 	test6();
 	test7();
 	test8();
+	test9();
 	return 0;
 }
