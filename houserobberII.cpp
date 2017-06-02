@@ -15,6 +15,7 @@ public:
            2, 4, 6 (8%7 is 1 which is the neighbour of 2)
 		*/        
         int n = nums.size();
+        if (n == 0) return 0;
         int cycles = 0;
         if (n % 2 == 0) cycles = 2;
         else cycles = 3;
@@ -84,6 +85,22 @@ void test5() {
 	assert (res == 11);
 }
 
+void test6() {
+	int arr[] = {};
+	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
+	Solution sol;
+	int res = sol.rob(v);
+	assert (res == 0);
+}
+
+void test7() {
+	int arr[] = {2};
+	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
+	Solution sol;
+	int res = sol.rob(v);
+	assert (res == 2);
+}
+
 int main() {
 	test0();
 	test1();
@@ -91,6 +108,7 @@ int main() {
 	test3();
 	test4();
 	test5();
-	/*test6();*/
+	test6();
+	test7();
 	return 0;
 }
