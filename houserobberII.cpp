@@ -15,7 +15,9 @@ public:
            2, 4, 6 (8%7 is 1 which is the neighbour of 2)
 		*/        
         int n = nums.size();
-        int cycles = (n % 2 == 0) ? 2 : 3;
+        int cycles = 0;
+        if (n % 2 == 0) cycles = 2;
+        else cycles = 3;
         int maxloot = 0, loot = 0;
         int j = 0;
         for (int i = 0; i < cycles; ++i) {
