@@ -17,10 +17,13 @@ public:
         int n = nums.size();
         int cycles = (n % 2 == 0) ? 2 : 3;
         int maxloot = 0, loot = 0;
+        int j = 0;
         for (int i = 0; i < cycles; ++i) {
         	loot = nums[i];
-        	int j = (i + 2) % n;
-        	while ((j != i) || ((j + 1) != i)) {
+        	j = (i + 2) % n;
+        	while (1) {
+        		if (cycles == 2 && j == i) break;
+        		if (cycles == 3 && (((j + 1) % n) == i)) break;
         		loot += nums[j];
         		j = (j + 2) % n;
         	}
@@ -71,13 +74,21 @@ void test4() {
 	assert (res == 3);
 }
 
+void test5() {
+	int arr[] = {2,7,9,3,1};
+	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
+	Solution sol;
+	int res = sol.rob(v);
+	assert (res == 11);
+}
+
 int main() {
 	test0();
 	test1();
 	test2();
-	/*test3();
+	test3();
 	test4();
 	test5();
-	test6();*/
+	/*test6();*/
 	return 0;
 }
