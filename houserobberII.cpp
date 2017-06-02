@@ -16,21 +16,36 @@ public:
 		*/        
         int n = nums.size();
         if (n == 0) return 0;
-        int cycles = 0;
-        if (n % 2 == 0) cycles = 2;
-        else cycles = 3;
+        if (n == 1) return nums[0];
+        int cycles = (n % 2 == 0) ? 2 : 3;
         int maxloot = 0, loot = 0;
         int j = 0;
         for (int i = 0; i < cycles; ++i) {
-        	loot = nums[i];
-        	j = (i + 2) % n;
-        	while (1) {
-        		if (cycles == 2 && j == i) break;
-        		if (cycles == 3 && (((j + 1) % n) == i)) break;
-        		loot += nums[j];
-        		j = (j + 2) % n;
-        	}
-        	if (maxloot < loot) maxloot = loot; 
+        	
+        	vector<string> dir;
+        	dir.push_back("left");
+        	dir.push_back("right");
+
+        	for (int k = 0; k < dir.size(); ++k) {
+        		loot = nums[i];
+        		if (dir[k] == "left")
+        			j = (i - 2) % n;
+        		else
+	        		j = (i + 2) % n;
+	        	while (1) {
+	        		if (cycles == 2 && j == i) break;
+	        		if (cycles == 3) {
+	        			if (dir[k] == "right" && ((j + 1) % n) == i) break;
+	        			else if ((j - 1) % n == i) break;
+					}
+	        		loot += nums[j];
+	        		if (dir[k] == "left")
+        				j = (j - 2) % n;
+        			else
+	        			j = (i + 2) % n;
+	        	}
+	        	if (maxloot < loot) maxloot = loot; 
+	        }
         }
         return maxloot;
     }
@@ -101,6 +116,14 @@ void test7() {
 	assert (res == 2);
 }
 
+void test8() {
+	int arr[] = {1,3,1,3,100};
+	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
+	Solution sol;
+	int res = sol.rob(v);
+	assert (res == 103);
+}
+
 int main() {
 	test0();
 	test1();
@@ -110,5 +133,6 @@ int main() {
 	test5();
 	test6();
 	test7();
+	test8();
 	return 0;
 }
