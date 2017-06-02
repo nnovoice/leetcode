@@ -6,17 +6,20 @@ using namespace std;
 class Solution {
 public:
     int rob(vector<int>& nums) {
-        int maxEven = 0, maxOdd = 0;
+        vector<int> loots (nums.size());
         int n = nums.size();
-        for (int i = 0; i < n; ++i) {
-            if (i % 2 == 0)
-                maxEven += nums[i];
-            else
-                maxOdd += nums[i];
-            
+        if (n == 0) return 0;
+        if (n == 1) return nums[0];
+        int maxloot = 0;
+        loots[0] = nums[0];
+        loots[1] = nums[1];
+        maxloot = max(loots[0],loots[1]);
+
+        for (int i = 2; i < n; ++i) {
+        	loots[i] = nums[i] + max(loots[i - 1], loots[i - 2]);
+        	maxloot = max(loots[i - 1], loots[i]);
         }
-        return max(maxEven, maxOdd);
-        
+        return maxloot;
     }
 };
 
@@ -25,6 +28,7 @@ void test0() {
 	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
 	Solution sol;
 	int res = sol.rob(v);
+	cout << res << endl;
 	assert (res == 4);
 }
 
