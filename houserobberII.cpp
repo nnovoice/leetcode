@@ -6,15 +6,27 @@ using namespace std;
 class Solution {
 public:
     int rob(vector<int>& nums) {
-        vector<int> loots (nums.size());
-
+        /* there are only 2 cycles to consider in case of even number of elements
+           0, 2, 4, 6
+           1, 2, 5, 7
+           in case of odd number of elements
+           0, 2, 4 (6 becomes neighbour of 2)
+           1, 3, 5 (7%7 is 0 which is neighbour of 1)
+           2, 4, 6 (8%7 is 1 which is the neighbour of 2)
+		*/        
         int n = nums.size();
-        int m1 = 0, m2 = 0;
-        for (int i = 0; i < n; ++i) {
-        	if (i % 2 == 0) m2 += nums[i];
-        	else m1 += nums[i];
+        int cycles = (n % 2 == 0) ? 2 : 3;
+        int maxloot = 0, loot = 0;
+        for (int i = 0; i < cycles; ++i) {
+        	loot = nums[i];
+        	int j = (i + 2) % n;
+        	while ((j != i) || ((j + 1) != i)) {
+        		loot += nums[j];
+        		j = (j + 2) % n;
+        	}
+        	if (maxloot < loot) maxloot = loot; 
         }
-        return max(m1, m2);
+        return maxloot;
     }
 };
 
@@ -41,6 +53,22 @@ void test2() {
 	Solution sol;
 	int res = sol.rob(v);
 	assert (res == 10);
+}
+
+void test3() {
+	int arr[] = {1,1,1};
+	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
+	Solution sol;
+	int res = sol.rob(v);
+	assert (res == 1);
+}
+
+void test4() {
+	int arr[] = {1,3,2};
+	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
+	Solution sol;
+	int res = sol.rob(v);
+	assert (res == 3);
 }
 
 int main() {
