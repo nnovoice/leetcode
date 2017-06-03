@@ -33,14 +33,14 @@ private:
 		while (parents->empty() == false) {
 			TreeNode* t = parents->top();
 			num += t->val;
-			cout << endl << t->val << " ";
+			//cout << endl << t->val << " ";
 			if (t->left != NULL)  {
 				children->push(t->left);
-				cout << t->left->val << " ";
+				//cout << t->left->val << " ";
 			}
 			if (t->right != NULL) { 
 				children->push(t->right);
-				cout << t->right->val << endl;
+				//cout << t->right->val << endl;
 			}
 			parents->pop();
 			if (parents->empty()) {
@@ -53,10 +53,10 @@ private:
 				++level;
 			}
 		}
-		cout << endl;
+		/*cout << endl;
 		for (int i = 0; i < dp.size(); ++i)
 			cout << dp[i] << " ";
-		cout << "level=" << level << endl;
+		cout << "level=" << level << endl;*/
 		
 		if (parents != NULL) delete parents;
 		if (children != NULL) delete children;
@@ -119,10 +119,66 @@ void test2() {
 	assert (res == 123);
 }
 
+void test3() {
+	Solution sol;
+	TreeNode* root = new TreeNode(3);
+	
+	TreeNode* rootl = new TreeNode(2);
+	TreeNode* rootr = new TreeNode(3);
+	root->left = rootl;
+	root->right = rootr;
+
+	cout << root->val << " " << root->left->val << " " << root->right->val << endl;
+	
+	//TreeNode* ll = new TreeNode(4);
+	TreeNode* lr = new TreeNode(3);
+	//rootl->left = ll;
+	rootl->right = lr;
+	//cout << rootl->val << " " << rootl->left->val << " " << rootl->right->val << endl;
+	//TreeNode* rl = new TreeNode(6);
+	TreeNode* rr = new TreeNode(1);
+	//rootr->left = rl;
+	rootr->right = rr;
+	//cout << rootr->val << " " << rootr->left->val << " " << rootr->right->val << endl;
+
+	int res = sol.rob(root);
+	cout << "test2=" << res << endl;
+	assert (res == 7);
+}
+
+void test4() {
+	Solution sol;
+	TreeNode* root = new TreeNode(3);
+	
+	TreeNode* rootl = new TreeNode(4);
+	TreeNode* rootr = new TreeNode(5);
+	root->left = rootl;
+	root->right = rootr;
+
+	cout << root->val << " " << root->left->val << " " << root->right->val << endl;
+	
+	TreeNode* ll = new TreeNode(1);
+	TreeNode* lr = new TreeNode(3);
+	rootl->left = ll;
+	rootl->right = lr;
+	cout << rootl->val << " " << rootl->left->val << " " << rootl->right->val << endl;
+	//TreeNode* rl = new TreeNode(6);
+	TreeNode* rr = new TreeNode(1);
+	//rootr->left = rl;
+	rootr->right = rr;
+	//cout << rootr->val << " " << rootr->left->val << " " << rootr->right->val << endl;
+
+	int res = sol.rob(root);
+	cout << "test2=" << res << endl;
+	assert (res == 9);
+}
+
 
 int main() {
 	test0();
 	test1();
 	test2();
+	test3();
+	test4();
 	return 0;
 }
