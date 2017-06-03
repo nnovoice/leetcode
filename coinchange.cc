@@ -65,7 +65,7 @@ void test4() {
 	Solution sol;
 	int arr[] = {474,83,404,3};
 	std::vector<int> v (arr, arr + (sizeof(arr)/sizeof(int)));
-	int res = sol.coinChange(v, 101);
+	int res = sol.coinChange(v, 264);
 	cout << "res=" << res << endl;
 	assert (res == 8);
 }
