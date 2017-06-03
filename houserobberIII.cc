@@ -142,7 +142,7 @@ void test3() {
 	//cout << rootr->val << " " << rootr->left->val << " " << rootr->right->val << endl;
 
 	int res = sol.rob(root);
-	cout << "test2=" << res << endl;
+	cout << "test3=" << res << endl;
 	assert (res == 7);
 }
 
@@ -173,6 +173,33 @@ void test4() {
 	assert (res == 9);
 }
 
+void test5() {
+	Solution sol;
+	TreeNode* root = new TreeNode(2);
+	
+	TreeNode* rootl = new TreeNode(1);
+	TreeNode* rootr = new TreeNode(3);
+	root->left = rootl;
+	root->right = rootr;
+
+	cout << root->val << " " << root->left->val << " " << root->right->val << endl;
+	
+	//TreeNode* ll = new TreeNode(4);
+	TreeNode* lr = new TreeNode(4);
+	//rootl->left = ll;
+	rootl->right = lr;
+	//cout << rootl->val << " " << rootl->left->val << " " << rootl->right->val << endl;
+	//TreeNode* rl = new TreeNode(6);
+	//TreeNode* rr = new TreeNode(1);
+	//rootr->left = rl;
+	//rootr->right = rr;
+	//cout << rootr->val << " " << rootr->left->val << " " << rootr->right->val << endl;
+
+	int res = sol.rob(root);
+	cout << "test5=" << res << endl;
+	assert (res == 7);
+}
+
 
 int main() {
 	test0();
@@ -180,5 +207,6 @@ int main() {
 	test2();
 	test3();
 	test4();
+	test5();
 	return 0;
 }
