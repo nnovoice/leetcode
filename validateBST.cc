@@ -34,7 +34,6 @@ public:
     	std::vector<int> v;
     	traverseInorder(v, root);
     	int n = v.size();
-    	if (n == 0) return false;
     	for (int i = 1; i < n; ++i) {
     		if (v[i] >= v[i - 1]) continue;
     		else return false;
