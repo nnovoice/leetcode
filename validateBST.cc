@@ -35,7 +35,7 @@ public:
     	traverseInorder(v, root);
     	int n = v.size();
     	for (int i = 1; i < n; ++i) {
-    		if (v[i] >= v[i - 1]) continue;
+    		if (v[i] > v[i - 1]) continue;
     		else return false;
     	}
     	return true;
@@ -126,6 +126,27 @@ void test5() {
 	assert (res == false);
 }
 
+void test6() {
+	Solution sol;
+	TreeNode* root = new TreeNode(4);
+	
+	TreeNode* l = new TreeNode(2);
+	root->left = l;
+
+	TreeNode* r = new TreeNode(7);
+	root->right = r;
+
+	TreeNode* ll = new TreeNode(1);
+	l->left = ll;
+
+	TreeNode* lr = new TreeNode(4);
+	l->right = lr;
+
+	bool res = sol.isValidBST(root);
+	cout << "test6=" << res << endl;
+	assert (res == false);
+}
+
 
 int main() {
 	test0();
@@ -134,5 +155,6 @@ int main() {
 	test3();
 	test4();
 	test5();
+	test6();
 	return 0;
 }
