@@ -1,8 +1,12 @@
 /*
-Leetcode: 337
-The thief has found himself a new place for his thievery again. There is only one entrance to this area, called the "root." Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that "all houses in this place forms a binary tree". It will automatically contact the police if two directly-linked houses were broken into on the same night.
+Leetcode: 98
+Given a binary tree, determine if it is a valid binary search tree (BST).
 
-Determine the maximum amount of money the thief can rob tonight without alerting the police.
+Assume a BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
 */
 #include <vector>
 #include <stack>
