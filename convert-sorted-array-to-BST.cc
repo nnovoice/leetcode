@@ -23,25 +23,12 @@ struct TreeNode {
  
 class Solution {
 private:
-	void createLeft(TreeNode* root, vector<int>& nums, int low, int high) {
-		if (low > high) return;
-		int median = low + (high - low) / 2;
-        root->left = new TreeNode(nums[median]);
-        createLeft(root->left, nums, low, median - 1);
-        createRight(root->left, nums, median + 1, high);
-	}
-	void createRight(TreeNode* root, vector<int>& nums, int low, int high) {
-		if (low > high) return;
-		int median = low + (high - low) / 2;
-        root->right = new TreeNode(nums[median]);
-        createLeft(root->right, nums, low, median - 1);
-        createRight(root->right, nums, median + 1, high);
-	}
-    TreeNode* sortedArrayToBST(vector<int>& nums, int low, int high) {
+	TreeNode* sortedArrayToBST(vector<int>& nums, int low, int high) {
+    	if (low > high) return NULL;
         int median = low + (high - low) / 2;
         TreeNode* root = new TreeNode(nums[median]);
-        createLeft(root, nums, low, median - 1);
-        createRight(root, nums, median + 1, high);
+        root->left = sortedArrayToBST(nums, low, median - 1);
+        root->right = sortedArrayToBST(nums, median + 1, high);
         return root;
     }    
 public:
