@@ -29,6 +29,7 @@ public:
         int val = 0, carry = 0;
         while (l1 != NULL && l2 != NULL) {
         	val = l1->val + l2->val + carry;
+        	carry = 0;
         	if (val >= 10) {
         		val -= 10;
         		carry = 1;
@@ -41,6 +42,7 @@ public:
         ListNode* r = (l1 != NULL) ? l1 : l2;
         while (r != NULL) {
         	val = r->val + carry;
+        	carry = 0;
         	if (val >= 10) {
         		val -= 10;
         		carry = 1;
