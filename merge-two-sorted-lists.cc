@@ -15,11 +15,11 @@ public:
         if (la == NULL) return lb;
         if (lb == NULL) return la;
         ListNode *head = NULL, *p1 = NULL, *l1 = NULL, *l2 = NULL;
-        l1 = (la->val < lb->val) ? la : lb;
-        l2 = (la->val < lb->val) ? lb : la;
+        l1 = (la->val <= lb->val) ? la : lb;
+        l2 = (la->val <= lb->val) ? lb : la;
         head = l1;
         while (l1 != NULL && l2 != NULL) {
-        	if (l1->val < l2->val) {
+        	if (l1->val <= l2->val) {
         		p1 = l1;
         		l1 = l1->next;
         	}
@@ -93,6 +93,25 @@ void test1() {
 	assert (res != NULL && vm == v3);
 }
 
+void test1_1() {
+	Solution sol;
+	int arr1[] = {1};
+	std::vector<int> v1 (arr1, arr1 + (sizeof(arr1)/sizeof(int)));
+	ListNode* l1 = getList(v1);
+
+	int arr2[] = {1};
+	std::vector<int> v2 (arr2, arr2 + (sizeof(arr2)/sizeof(int)));
+	ListNode* l2 = getList(v2);
+
+	int arr3[] = {1, 1};
+	std::vector<int> v3 (arr3, arr3 + (sizeof(arr3)/sizeof(int)));
+
+	ListNode* res = sol.mergeTwoLists(l1, l2);
+	std::vector<int> vm = getArrayFromList(res);
+
+	assert (res != NULL && vm == v3);
+}
+
 void test2() {
 	Solution sol;
 	int arr1[] = {3,6,9};
@@ -134,6 +153,7 @@ void test3() {
 int main() {
 	test0();
 	test1();
+	test1_1();
 	test2();
 	test3();
 	/*test4();
