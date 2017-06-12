@@ -26,29 +26,15 @@ public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
     	ListNode *head = new ListNode(0);
         ListNode *p = head;
-        int val = 0, carry = 0;
-        while (l1 != NULL && l2 != NULL) {
-        	val = l1->val + l2->val + carry;
-        	carry = 0;
-        	if (val >= 10) {
-        		val -= 10;
-        		carry = 1;
-        	}
-        	p->next = new ListNode(val);
-        	l1 = l1->next;
-        	l2 = l2->next;
-        	p = p->next;
-        }
-        ListNode* r = (l1 != NULL) ? l1 : l2;
-        while (r != NULL) {
-        	val = r->val + carry;
-        	carry = 0;
-        	if (val >= 10) {
-        		val -= 10;
-        		carry = 1;
-        	}
-        	p->next = new ListNode(val);
-        	r =r->next;
+        int val = 0, carry = 0, x = 0, y = 0;
+        while (l1 != NULL || l2 != NULL) {
+        	x = (l1 != NULL) ? l1->val : 0;
+        	y = (l2 != NULL) ? l2->val : 0;
+        	val = x + y + carry;
+        	carry = val / 10;
+        	p->next = new ListNode(val % 10);
+        	l1 = (l1 != NULL) ? l1->next : NULL;
+        	l2 = (l2 != NULL) ? l2->next : NULL;
         	p = p->next;
         }
         if (carry != 0) {
