@@ -13,6 +13,7 @@ class Solution {
 public:
 	struct compare {
 		bool operator() (const ListNode* l, const ListNode* r) {
+			cout << "l=" << l->val << " r=" << r->val << endl;
 			return l->val > r->val;
 		}
 	};
@@ -56,6 +57,12 @@ vector<int> getArrayFromList (ListNode* l) {
 		l = l->next;
 	}
 	return v;
+}
+
+void printArray(vector<int>& v) {
+	for (auto a : v)
+		cout << a << " ";
+	cout << endl;
 }
 
 void test0() {
@@ -117,6 +124,8 @@ void test2() {
 
 	ListNode* res = sol.mergeKLists(vl);
 	std::vector<int> vm = getArrayFromList(res);
+
+	printArray(vm);
 
 	int arr3[] = {1,2,3,4,5,6};
 	std::vector<int> v3 (arr3, arr3 + (sizeof(arr3)/sizeof(int)));
