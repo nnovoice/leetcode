@@ -26,20 +26,17 @@ struct TreeNode {
 
 class Solution {
 private:
-    int sumOfLeftLeaves(TreeNode *root, TreeNode *parent) {
-        if (root == NULL) return NULL;
-        if (parent && root->left == NULL && root->right == NULL)
+    int sumOfLeftLeaves(TreeNode *root, bool isLeft) {
+        if (root == NULL) return 0;
+        if (isLeft && root->left == NULL && root->right == NULL)
             return root->val;
-        int leftVal = sumOfLeftLeaves(root->left, root);
-        int rightVal = 0;
-        if (root->right != NULL && root->right->left != NULL)
-            rightVal = sumOfLeftLeaves(root->right, root);
+        int leftVal = sumOfLeftLeaves(root->left, true);
+        int rightVal = sumOfLeftLeaves(root->right, false);
         return leftVal + rightVal;
-        
     }
 public:
     int sumOfLeftLeaves(TreeNode* root) {
-        return sumOfLeftLeaves(root, NULL);
+        return sumOfLeftLeaves(root, false);
     }
 };
 
