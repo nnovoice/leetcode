@@ -22,30 +22,30 @@ using namespace std;
 class Solution {
 private:
     int getElementUsingBS(vector<int>& nums, int low, int high) {
-    int mid = 0, ml = 0, mr = 0;
+    if (low > high) return nums[high];
     if (low == high) return nums[low];
-    if (low < high) {
-        mid = low + (high - low) / 2;
-        ml = mid - 1;
-        mr = mid + 1;
-        if (ml < 0) return (nums[mid] < nums[mr]) ? nums[mid] : nums[mr];
-        if (mr == nums.size()) return (nums[mid] < nums[ml]) ? nums[mid] : nums[ml];
-        if (nums[ml] > nums[mid] && nums[mid] < nums[mr]) return nums[mid];
-        
-        int lmin = getElementUsingBS(nums, low, mid - 1);
-        int rmin = getElementUsingBS(nums, mid + 1, high);
-        return min(lmin, rmin);
-    }
-    return nums[high];
+    if (high - low == 1) return (nums[low] < nums[high]) ? nums[low] : nums[high];
     
+    int mid = 0, ml = 0, mr = 0;
+    mid = low + (high - low) / 2;
+    ml = mid - 1;
+    mr = mid + 1;
+
+    if (nums[ml] > nums[mid] && nums[mid] < nums[mr]) return nums[mid];
+    
+    int lmin = getElementUsingBS(nums, low, mid - 1);
+    int rmin = getElementUsingBS(nums, mid + 1, high);
+
+    return min(lmin, rmin);
 }
 public:
-int findMin(vector<int>& nums) {
-    int n = nums.size();
-    if (n == 0) return INT_MIN;
-    return getElementUsingBS(nums, 0, n - 1);
-}
+    int findMin(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 0) return INT_MIN;
+        return getElementUsingBS(nums, 0, n - 1);
+    }
 };
+
 /* Ignore this test
 void test0() {
     Solution sol;
