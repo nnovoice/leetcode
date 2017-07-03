@@ -37,26 +37,20 @@ public:
 		int n = nums.size();
         if (n == 0) return v;
         deque<int> queue;
-        deque<int>::iterator qiter;
         // build the queue from [0,k - 1]
         for (int i = 0; i < k; ++i) {
-        	while (queue.empty() == false && queue.back() < nums[i])
+        	while (queue.empty() == false && nums[queue.back()] < nums[i])
         		queue.pop_back();
-        	queue.push_back(nums[i]);
+        	queue.push_back(i);
         }
-        v.push_back(queue.front());
+        v.push_back(nums[queue.front()]);
         // manage the queue from [k, n - 1]
         for (int i = k; i < n; ++i) {
-        	while (queue.empty() == false && queue.back() < nums[i])
+        	while (queue.empty() == false && nums[queue.back()] < nums[i])
         		queue.pop_back();
-        	for (qiter = queue.begin(); qiter != queue.end(); ++qiter) {
-        		if (*qiter == nums[i - k]) {
-        			queue.erase(qiter);
-        			break;
-        		}
-        	}
-        	queue.push_back(nums[i]);
-        	v.push_back(queue.front());
+        	if (queue.empty() == false && queue.front() == i - k) queue.pop_front();
+        	queue.push_back(i);
+        	v.push_back(nums[queue.front()]);
         }
         return v;
     }
