@@ -28,12 +28,12 @@ public:
         int low = 0, mid = 0, high = n - 1;
         while (low <= high) {
             mid = low + (high - low) / 2;
-            cout << "num[" << mid << "]= " << nums[mid] << endl;
+            //cout << "num[" << mid << "]= " << nums[mid] << "target=" << target << endl;
             if (nums[mid] == target) return mid;
             if (nums[mid] > nums[high] && (target > nums[mid] || target <= nums[high]))
                 low = mid + 1;
             else {
-                if (nums[low] > nums[mid] && (target >= nums[low] || target < mid))
+                if (nums[low] > nums[mid] && (target >= nums[low] || target < nums[mid]))
                     high = mid - 1;
                 else if (target > nums[mid]) 
                     low = mid + 1;
@@ -144,7 +144,7 @@ int main() {
     test4();
     test5();
     test6();
-    //test7();
+    test7();
     test8();
     test9();
     return 0;
