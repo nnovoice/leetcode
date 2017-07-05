@@ -22,7 +22,7 @@ using namespace std;
 class Solution {
 public:
     int firstUniqChar(string s) {
-        std::vector<int> counts (26, 0);
+        int counts [26] = {0};
         for (int i = 0; i < s.length(); ++i) {
             counts[s[i] - 'a'] += 1;
         }
