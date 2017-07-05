@@ -24,28 +24,37 @@ The array may contain duplicates.
 using namespace std;
 
 class Solution {
+private:
+    bool search(std::vector<int>& v, int low, int high, int target) {
+        if (low > high) return false;
+        
+        int mid = low + (high - low) / 2;
+        
+        if (v[mid] == target) return true;
+
+        //cout << "num[" << mid << "]= " << v[mid] << "target=" << target << endl;
+        bool ret = false;
+        if (v[mid] >= v[high] && (target > v[mid] || target <= v[high]))
+            ret = search (v, mid + 1, high, target);
+
+        if (ret == false) {
+            if (v[low] >= v[mid] && (target >= v[low] || target < v[mid]))
+                ret = search(v, low, mid - 1, target);
+        }
+        
+        if (ret == false) {
+            if (target > v[mid]) 
+                ret = search (v, mid + 1, high, target);
+            else
+                ret = search(v, low, mid - 1, target);
+        }
+        return ret;
+    }
 public:
     bool search(vector<int>& nums, int target) {
         int n = nums.size();
         if (n == 0) return false;
-
-        int low = 0, mid = 0, high = n - 1;
-        while (low <= high) {
-            mid = low + (high - low) / 2;
-            //cout << "num[" << mid << "]= " << nums[mid] << "target=" << target << endl;
-            if (nums[mid] == target) return true;
-            if (nums[mid] > nums[high] && (target > nums[mid] || target <= nums[high]))
-                low = mid + 1;
-            else {
-                if (nums[low] > nums[mid] && (target >= nums[low] || target < nums[mid]))
-                    high = mid - 1;
-                else if (target > nums[mid]) 
-                    low = mid + 1;
-                else
-                    high = mid - 1;
-            }
-        }
-        return false;        
+        return search (nums, 0, n - 1, target);        
     }
 };
 
@@ -187,6 +196,16 @@ void test9_0() {
     assert (res == false);
 }
 
+void test10() {
+    std::vector<int> v = {1,3,1,1,1};
+    //std::vector<int> ev = {0,1,2,3,4,5,6,7,8,9,10};
+    Solution sol;
+    int n = v.size();
+    bool res = false;
+    res = sol.search(v, 3);
+    assert (res == true);
+}
+
 int main() {
     test0();
     test1();
@@ -205,5 +224,6 @@ int main() {
     test8_0();
     test9();
     test9_0();
+    test10();
     return 0;
 }
