@@ -17,7 +17,7 @@ class Solution {
 public:
     void rotate(vector<int>& nums, int k) {
 		int n = nums.size();
-		if (n == 0) return;
+		if (n == 0 || k == 0 || k > n) return;
 		for (int i = 0, j = n - 1; i < j; ++i, --j)
 			std::swap(nums[i], nums[j]);
 		for (int i = 0, j = k - 1; i < j; ++i, --j)
@@ -25,7 +25,7 @@ public:
 		for (int i = k, j = n - 1; i < j; ++i, --j)
 			std::swap(nums[i], nums[j]);
     }
-};
+};	
 
 void test0() {
 	std::vector<int> v = {10, 11, 12, 13, 14, 15, 16};
@@ -80,6 +80,14 @@ void test6() {
 	std::vector<int> v1 = {1,2,3,4,5,6};
 	Solution sol;
 	sol.rotate(v, 6);
+	assert(v == v1);
+}
+
+void test7() {
+	std::vector<int> v = {10, 11, 12, 13, 14, 15, 16};
+	std::vector<int> v1 = {10, 11, 12, 13, 14, 15, 16};
+	Solution sol;
+	sol.rotate(v, 11);
 	assert(v == v1);
 }
 
