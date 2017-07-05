@@ -13,17 +13,27 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 #include <cassert>
 using namespace std;
 
+void printVector(vector<int>& v) {
+	for (int a : v) 
+		cout << a << " ";
+	cout << endl;
+}
+
 class Solution {
 public:
     void rotate(vector<int>& nums, int k) {
 		int n = nums.size();
-		if (n == 0 || k == 0 || k > n) return;
+		if (n == 0 || k == 0) return;
+		k = k % n;
 		for (int i = 0, j = n - 1; i < j; ++i, --j)
 			std::swap(nums[i], nums[j]);
+		printVector(nums);
 		for (int i = 0, j = k - 1; i < j; ++i, --j)
 			std::swap(nums[i], nums[j]);
+		printVector(nums);
 		for (int i = k, j = n - 1; i < j; ++i, --j)
 			std::swap(nums[i], nums[j]);
+		printVector(nums);
     }
 };	
 
@@ -85,9 +95,17 @@ void test6() {
 
 void test7() {
 	std::vector<int> v = {10, 11, 12, 13, 14, 15, 16};
-	std::vector<int> v1 = {10, 11, 12, 13, 14, 15, 16};
+	std::vector<int> v1 = {13,14,15,16,10,11,12};
 	Solution sol;
 	sol.rotate(v, 11);
+	assert(v == v1);
+}
+
+void test8() {
+	std::vector<int> v = {10, 11};
+	std::vector<int> v1 = {11, 10};
+	Solution sol;
+	sol.rotate(v, 3);
 	assert(v == v1);
 }
 
@@ -99,5 +117,7 @@ int main() {
 	test4();
 	test5();
 	test6();
+	test7();
+	test8();
 	return 0;
 }
