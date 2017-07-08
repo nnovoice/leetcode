@@ -28,26 +28,26 @@ public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         if (head == NULL || n == 0) return head;
         
-        ListNode* p = head, *q = head;
+        ListNode* p = head, *q = head, *prev = NULL, *temp = NULL;
         int count = 0;
-        while (q->next != NULL) {
+        while (q != NULL) {
             q = q->next;
             count += 1;
             if (count == n) break;
         }
-        while (q->next != NULL) {
+        while (q != NULL) {
+        	prev = p;
             p = p->next;
             q = q->next;
         }
-        if (n - count > 1) return head;
-        ListNode *temp = NULL;
-        if (p == head) {
-            temp = p;
-            head = head->next;
+
+        if (prev == NULL) {
+        	temp = p;
+        	head = head->next;
         }
         else {
-            temp = p->next;
-            p->next = p->next->next;
+        	temp = p;
+        	prev->next = temp->next;
         }
         return head;
     }
@@ -91,7 +91,7 @@ void test1() {
 	ListNode* res = sol.removeNthFromEnd(l1, 1);
 	std::vector<int> vm = getArrayFromList(res);
 	std::vector<int> v3 = {};
-	assert (res != NULL && vm == v3);
+	assert (res == NULL && vm == v3);
 }
 
 void test1_1() {
@@ -101,6 +101,16 @@ void test1_1() {
 	ListNode* res = sol.removeNthFromEnd(l1, 1);
 	std::vector<int> vm = getArrayFromList(res);
 	std::vector<int> v3 = {1,2,3,4};
+	assert (res != NULL && vm == v3);
+}
+
+void test1_2() {
+	Solution sol;
+	std::vector<int> v1 = {1,2,3,4,5};
+	ListNode* l1 = getList(v1);
+	ListNode* res = sol.removeNthFromEnd(l1, 5);
+	std::vector<int> vm = getArrayFromList(res);
+	std::vector<int> v3 = {2,3,4,5};
 	assert (res != NULL && vm == v3);
 }
 
@@ -146,8 +156,9 @@ void test5() {
 
 int main() {
 	test0();
-	//test1();
+	test1();
 	test1_1();
+	test1_2();
 	test2();
 	test3();
 	test4();
