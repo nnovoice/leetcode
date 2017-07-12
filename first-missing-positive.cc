@@ -18,38 +18,19 @@ using namespace std;
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
-        if (nums.size() == 0) return 1;
-        unordered_set<int> missing, found;
+        unordered_set<int> found;
+        int max_num = INT_MIN;
         int l = 0, g = 0;
         for (int i = 0; i < nums.size(); ++i) {
-            found.insert(nums[i]);
-            if (nums[i] > 1) {
-                l = nums[i] - 1;
-                if (found.find(l) == found.end()) {
-                    if (missing.find(l) == missing.end())
-                        missing.insert(l);
-                }
-            }
-            g = nums[i] + 1;
-            if (found.find(g) == found.end()) {
-                if (missing.find(g) == missing.end())
-                    missing.insert(g);
+            if (nums[i] > 0) {
+            	found.insert(nums[i]);
+            	if (nums[i] > max_num) max_num = nums[i];
             }
         }
-        if (missing.size() > 0) {
-            int min = INT_MAX;
-            unordered_set<int>::iterator iter = missing.begin();
-            for (; iter != missing.end(); ++iter)
-                if (*iter < min) min = *iter;
-            return min;
+        for (int i = 1; i <= max_num + 1; ++i) {
+        	if (found.find(i) == found.end()) return i;
         }
-        else {
-            int max = INT_MIN;
-            unordered_set<int>::iterator iter = found.begin();
-            for (; iter != found.end(); ++iter) 
-                if (*iter > max) max = *iter;
-            return max + 1;
-        }
+        return -1;
     }
 };
 
@@ -64,6 +45,7 @@ void test0() {
 	Solution sol;
 	std::vector<int> v1 = {};
 	int res = sol.firstMissingPositive(v1);
+	cout << res << endl;
 	assert (res == 1);
 }
 
