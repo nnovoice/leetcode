@@ -21,28 +21,27 @@ using namespace std;
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
-        unordered_set<int> found;
-        int max_num = 1;
-        int l = 0, g = 0;
-        for (int i = 0; i < nums.size(); ++i) {
-            if (nums[i] > 0) {
-            	found.insert(nums[i]);
-            	if (nums[i] > max_num) max_num = nums[i];
+        int n = nums.size();
+        int i = 0;
+        while (i < n) {
+            if (nums[i] > 0 && nums[i] < n) {
+            	if (i == nums[i]) {
+            		++i;
+            	}
+            	else {
+            		swap(nums[i], nums[nums[i]]);
+            	}
+            }
+            else {
+            	++i;
             }
         }
-        for (int i = 1; i <= max_num + 1; ++i) {
-        	if (found.find(i) == found.end()) return i;
+        for (int i = 1; i < n; ++i) {
+        	if (i != nums[i]) return i;
         }
-        return -1;
+        return (n > 0) ? nums[n] + 1 : 1;
     }
 };
-
-void printArray(vector<int>& v) {
-	int n = v.size();
-	for (int i = 0; i < n; ++i)
-		cout << v[i] << " ";
-	cout << endl;
-}
 
 void test0() {
 	Solution sol;
