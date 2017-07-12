@@ -1,9 +1,12 @@
 /*
-Given an array of n elements and a given target sum S and a number of elements M, find the elements
-that sum to nearest S.
+Leetcode: 41. First Missing Positive
+Given an unsorted integer array, find the first missing positive integer.
 
-Assuming +ve numbers
+For example,
+Given [1,2,0] return 3,
+and [3,4,-1,1] return 2.
 
+Your algorithm should run in O(n) time and uses constant space.
 */
 
 #include <vector>
@@ -19,7 +22,7 @@ class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         unordered_set<int> found;
-        int max_num = INT_MIN;
+        int max_num = 1;
         int l = 0, g = 0;
         for (int i = 0; i < nums.size(); ++i) {
             if (nums[i] > 0) {
@@ -53,7 +56,7 @@ void test1() {
 	Solution sol;
 	std::vector<int> v1 = {-2,-1,0,1};
 	int res = sol.firstMissingPositive(v1);
-	assert (res == 1);
+	assert (res == 2);
 }
 
 void test1_1() {
