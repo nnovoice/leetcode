@@ -8,7 +8,7 @@ Assuming +ve numbers
 
 #include <vector>
 #include <stack>
-#include <unordered_map>
+#include <unordered_set>
 #include <algorithm>
 #include <iostream>
 #include <cassert>
@@ -19,7 +19,7 @@ class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         if (nums.size() == 0) return 1;
-        unordered_map<int> missing, found;
+        unordered_set<int> missing, found;
         int l = 0, g = 0;
         for (int i = 0; i < nums.size(); ++i) {
             found.insert(nums[i]);
@@ -45,7 +45,7 @@ public:
         }
         else {
             int max = INT_MIN;
-            unordered_map<int>::iterator iter = found.begin();
+            unordered_set<int>::iterator iter = found.begin();
             for (; iter != found.end(); ++iter) 
                 if (*iter > max) max = *iter;
             return max + 1;
