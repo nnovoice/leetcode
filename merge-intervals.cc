@@ -19,9 +19,9 @@ struct Interval {
 
 bool areIntervalVectorsEqual(vector<Interval>& l, vector<Interval>& r) {
 	if (l.size() != r.size()) return false;
-	cout << "l.size=" << l.size() << " r.size=" << r.size() << endl;
+	//cout << "l.size=" << l.size() << " r.size=" << r.size() << endl;
 	for (int i = 0; i < l.size(); ++i) {
-		cout << r[i].start << " " << r[i].end << endl;
+		//cout << r[i].start << " " << r[i].end << endl;
 		if (l[i].start != r[i].start || l[i].end != r[i].end) return false;
 	}
 	return true;
@@ -38,17 +38,19 @@ public:
         for (int i = 0; i < n; ++i) {
         	if (intervals[i].start > cur.end) {
         		res.push_back(cur);
-        		cout << cur.start << " " << cur.end << endl;
+        		//cout << cur.start << " " << cur.end << endl;
         		cur.start = intervals[i].start;
         		cur.end = intervals[i].end;
         	}
         	else { // obvious that (intervals[i].start <= cur.end)
         		if (intervals[i].end > cur.end)
         			cur.end = intervals[i].end;
+        		if (intervals[i].start < cur.start)
+        			cur.start = intervals[i].start;
         	}
         }
         res.push_back(cur);
-        cout << cur.start << " " << cur.end << endl;
+        //cout << cur.start << " " << cur.end << endl;
         return res;
     }
 };
@@ -65,8 +67,7 @@ void test1() {
 	std::vector<Interval> v1 = {Interval(1,5), Interval(1,10), Interval(2,8)};
 	std::vector<Interval> exp = {Interval(1,10)};
 	std::vector<Interval> res = sol.merge(v1);
-	bool b = areIntervalVectorsEqual(exp,res);
-	//assert (b == true);
+	assert (areIntervalVectorsEqual(exp,res) == true);
 }
 
 void test1_1() {
@@ -80,6 +81,17 @@ void test1_1() {
 }
 
 void test1_2() {
+	Solution sol;
+	//[[1,3],[2,6],[8,10],[15,18],[14,19]]
+	std::vector<Interval> v1 = {Interval(1,3), Interval(2,6), Interval(8,10), Interval(15,18), Interval(14,19)};
+	std::vector<Interval> exp = {Interval(1,6), Interval(8,10), Interval(14,19)};
+	std::vector<Interval> res = sol.merge(v1);
+	//Given [1,3],[2,6],[8,10],[15,18],
+	//return [1,6],[8,10],[15,18].
+	assert (areIntervalVectorsEqual(exp,res) == true);
+}
+
+void test1_3() {
 	Solution sol;
 	std::vector<Interval> v1 = {Interval(1,5), Interval(1,8), 
 		Interval(2,6), Interval(2,10), Interval(3,11), Interval(3,18)};
@@ -104,11 +116,14 @@ void test3() {
 	assert (areIntervalVectorsEqual(exp,res) == true);
 }
 
+
+
 int main() {
 	test0();
 	test1();
 	test1_1();
 	test1_2();
+	test1_3();
 	test2();
 	test3();
 	/*test4();
