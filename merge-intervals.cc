@@ -6,6 +6,7 @@ Given [1,3],[2,6],[8,10],[15,18],
 return [1,6],[8,10],[15,18].
 */
 #include <vector>
+#include <algorithm>
 #include <iostream>
 #include <cassert>
 using namespace std;
@@ -27,12 +28,24 @@ bool areIntervalVectorsEqual(vector<Interval>& l, vector<Interval>& r) {
 	return true;
 }
 
+/*struct compare {
+	operator()(const Interval& l, const Interval& r) {
+		return l.start < r.start;
+	}
+};*/
+
+bool intervalCompare(const Interval& l, const Interval& r) {
+	return l.start < r.start;
+}
+
 class Solution {
 public:
     vector<Interval> merge(vector<Interval>& intervals) {
     	vector<Interval> res;
     	int n = intervals.size();
     	if (n == 0) return res;
+
+    	sort(intervals.begin(), intervals.end(), &intervalCompare);
 
     	Interval cur (intervals[0].start, intervals[0].end);
         for (int i = 0; i < n; ++i) {
@@ -116,7 +129,13 @@ void test3() {
 	assert (areIntervalVectorsEqual(exp,res) == true);
 }
 
-
+void test4() {
+	Solution sol;
+	std::vector<Interval> v1 = {Interval(1,4), Interval(0,0)};
+	std::vector<Interval> exp = {Interval(0,0), Interval(1,4)};
+	std::vector<Interval> res = sol.merge(v1);
+	assert (areIntervalVectorsEqual(exp,res) == true);
+}
 
 int main() {
 	test0();
@@ -126,8 +145,8 @@ int main() {
 	test1_3();
 	test2();
 	test3();
-	/*test4();
-	test5();*/
+	test4();
+	/*test5();*/
 	/*test6();
 	test7();*/
 	return 0;
