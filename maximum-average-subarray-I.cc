@@ -18,20 +18,24 @@ public:
     double findMaxAverage(vector<int>& nums, int k) {
         double max_avg = -1 * numeric_limits<double>::max(), avg = 0.0;
         int sum = 0;
+        int n = nums.size();
         
-        int max_idx = nums.size() - k;
-        if (max_idx <= 0) max_idx = nums.size();
-        if (k > nums.size()) k = nums.size();
+        if (k > n) k = nums.size();
 
-        for (int i = 0; i < max_idx; ++i) {
-        	sum = 0;
-        	for (int j = i; j < i + k; ++j) {
-        		sum += nums[j];
-        	}
-        	avg = ((double)sum) / k;
-        	cout << "avg=" << avg << endl;
-        	max_avg = max(max_avg, avg);
+        for (int i = 0; i < k; ++i) {
+        	sum += nums[i];
         }
+        
+        avg = (double) sum / k;
+        max_avg = max (max_avg, avg);
+
+        for (int i = k; i < n; ++i) {
+        	sum -= nums[i - k];
+        	sum += nums[i];
+        	avg = (double) sum / k;
+        	max_avg = max (max_avg, avg);
+        }
+
         return max_avg;
     }
 };
