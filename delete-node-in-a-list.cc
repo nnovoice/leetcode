@@ -38,6 +38,16 @@ public:
     	
     	return head;
     }
+    void deleteNode(ListNode* node) {
+        ListNode* t = NULL;
+        if (node == NULL) return;
+        if (node->next != NULL) {
+            t = node->next;
+            node->val = t->val;
+            node->next = t->next;
+            delete t;
+        }
+    }
 };
 
 ListNode* getList(std::vector<int>& v) {
