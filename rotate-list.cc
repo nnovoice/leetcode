@@ -74,7 +74,7 @@ public:
         int n = countNodes(head);
         k = k % n;
         int diff = n - k;
-        if (diff == 0) return head;
+        if (k == 0) return head;
 
         ListNode *pprev = nullptr, *p = head, *q = nullptr, *qtail = nullptr;
         while (p != nullptr && diff != 0) {
@@ -100,6 +100,7 @@ public:
 };
 
 void test0() {
+	cout << "test0" << endl;
 	Solution sol;
 	std::vector<int> v1 = {};
 	ListNode* l1 = getList(v1);
@@ -111,6 +112,7 @@ void test0() {
 }
 
 void test1() {
+	cout << "test1" << endl;
 	Solution sol;
 	std::vector<int> v1 = {1};
 	ListNode* l1 = getList(v1);
@@ -189,7 +191,7 @@ void test6() {
 	ListNode* res = sol.rotateRight(l1,5);
 	std::vector<int> vm = getArrayFromList(res);
 	printArray(vm);
-	std::vector<int> v3 = {1,2,3,4,5,6,7,8,9,9,10,10,11,12,-4,-3,-2,-1,0};
+	std::vector<int> v3 = {9,10,10,11,12,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9};
 	assert (res != nullptr && vm == v3);
 }
 
