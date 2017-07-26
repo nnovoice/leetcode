@@ -24,16 +24,11 @@ class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
         ListNode *p = head, *temp = nullptr;
-        int val = 0;
         while (p != nullptr) {
-        	val = p->val;
             if (p->next != nullptr && p->next->val == p->val) {
-            	while(p != nullptr && p->val == val) {
-	                temp = p;
-	                if (p == head) { head = p->next; }
-	                p = p->next;
-	                delete temp;
-            	}
+                temp = p->next;
+                p->next = temp->next;
+                delete temp;
             }
             else {
                 p = p->next;
@@ -87,8 +82,9 @@ void test1() {
 	ListNode* l1 = getList(v1);
 	ListNode* res = sol.deleteDuplicates(l1);
 	std::vector<int> vm = getArrayFromList(res);
-	std::vector<int> v3 = {};
-	assert (res == nullptr && vm == v3);
+	printArray(vm);
+	std::vector<int> v3 = {1};
+	assert (res != nullptr && vm == v3);
 }
 
 void test2() {
@@ -98,7 +94,7 @@ void test2() {
 	ListNode* res = sol.deleteDuplicates(l1);
 	std::vector<int> vm = getArrayFromList(res);
 	printArray(vm);
-	std::vector<int> v3 = {0};
+	std::vector<int> v3 = {0,1,3};
 	assert (res != nullptr && vm == v3);
 }
 
@@ -109,7 +105,7 @@ void test3() {
 	ListNode* res = sol.deleteDuplicates(l1);
 	std::vector<int> vm = getArrayFromList(res);
 	printArray(vm);
-	std::vector<int> v3 = {3,5};
+	std::vector<int> v3 = {1,3,5};
 	assert (res != nullptr && vm == v3);
 }
 
@@ -130,7 +126,19 @@ void test4() {
 	ListNode* l1 = getList(v1);
 	ListNode* res = sol.deleteDuplicates(l1);
 	std::vector<int> vm = getArrayFromList(res);
-	std::vector<int> v3 = {1,3,7,11,13};
+	printArray(vm);
+	std::vector<int> v3 = {1,2,3,5,7,11,13,17};
+	assert (res != nullptr && vm == v3);
+}
+
+void test5() {
+	Solution sol;
+	std::vector<int> v1 = {1,1,2,2,3,5,5,7,11,11,13,17,17};
+	ListNode* l1 = getList(v1);
+	ListNode* res = sol.deleteDuplicates(l1);
+	std::vector<int> vm = getArrayFromList(res);
+	printArray(vm);
+	std::vector<int> v3 = {1,2,3,5,7,11,13,17};
 	assert (res != nullptr && vm == v3);
 }
 
@@ -141,8 +149,8 @@ int main() {
 	test3();
 	test3_1();
 	test4();
-/*	test5();
-*/	/*test6();
+	test5();
+	/*test6();
 	test7();*/
 	return 0;
 }
