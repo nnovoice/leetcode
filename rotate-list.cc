@@ -5,7 +5,10 @@ Given a list, rotate the list to the right by k places, where k is non-negative.
 For example:
 Given 1->2->3->4->5->NULL and k = 2,
 return 4->5->1->2->3->NULL.
-
+Next:
+3Sum Closest
+Palindrome Linked List
+3Sum Smaller
 
 */
 #include <stack>
@@ -60,12 +63,9 @@ void printList(ListNode *l) {
 class Solution {
 private:
 	int countNodes(ListNode *head) {
-		ListNode *p = head;
 		int c = 0;
-		while (p != nullptr) {
+		for (ListNode *p = head; p != nullptr; p=p->next)
 			++c;
-			p = p->next;
-		}
 		return c;
 	}
 public:
@@ -73,9 +73,9 @@ public:
         if (head == nullptr || k <= 0) return head;
         int n = countNodes(head);
         k = k % n;
-        int diff = n - k;
         if (k == 0) return head;
-
+        int diff = n - k;
+        
         ListNode *pprev = nullptr, *p = head, *q = nullptr, *qtail = nullptr;
         while (p != nullptr && diff != 0) {
         	pprev = p;
