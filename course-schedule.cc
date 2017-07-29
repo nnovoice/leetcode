@@ -60,15 +60,23 @@ private:
         }
     }
     bool dfs(int n) {
-        if (path.find(n) != path.end()) return false;
-        path.insert(n);
-        for (int pre : graph[n]) {
-            if (vertices[pre] == true) continue;
-            bool b = dfs(pre);
-            if (b == false) return false;
+        stack<int> dfsStack;
+        dfsStack.push(n);
+        while (dfsStack.empty() == false) {
+            int n = dfsStack.top();
+            path.insert(n);
+            for (int pre : graph[n]) {
+                if (vertices[pre]) continue;
+                if (path.find(pre) != path.end()) return false;
+                dfsStack.push(pre);
+            }
+
+            if (dfsStack.top() == n) {
+                vertices[n] = true;
+                path.erase(n);
+                dfsStack.pop();
+            }
         }
-        vertices[n] = true;
-        path.erase(n);
         return true;
     }
     bool canFinish(int n) {
