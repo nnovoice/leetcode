@@ -60,6 +60,7 @@ private:
         }
     }
     bool dfs(int n) {
+        if (vertices[n]) return true;
         stack<int> dfsStack;
         dfsStack.push(n);
         while (dfsStack.empty() == false) {
@@ -81,8 +82,7 @@ private:
     }
     bool canFinish(int n) {
         for (int i = 0; i < n; ++i) {
-            vertices = map<int, bool>();
-            path = unordered_set<int>();
+            //path = unordered_set<int>();
             bool b = dfs(i);
             if (b == false) return false;
         }
@@ -92,7 +92,7 @@ private:
 public:
     bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
         buildGraph(prerequisites);
-        printGraph();
+        //printGraph();
         return canFinish(numCourses);
     }
 };
