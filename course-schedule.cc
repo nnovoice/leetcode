@@ -34,6 +34,8 @@ using namespace std;
 class Solution {
 private:
     map<int,vector<int>> graph;
+    map<int,bool> vertices;
+    unordered_set<int> path;
 private:
     void printGraph() {
         map<int,vector<int>>::iterator iter = graph.begin();
@@ -57,44 +59,26 @@ private:
             addEdge(p);
         }
     }
-    void updateInfo(int cNum, unordered_set<int>& visited, unordered_set<int>&curVertices, stack<int>& dfsStack) {
-        dfsStack.pop();
-        visited.insert(cNum);
-        curVertices.erase(cNum);
+    bool dfs(int n) {
+        if (path.find(n) != path.end()) return false;
+        path.insert(n);
+        for (int pre : graph[n]) {
+            if (vertices[pre] == true) continue;
+            bool b = dfs(pre);
+            if (b == false) return false;
+        }
+        vertices[n] = true;
+        path.erase(n);
+        return true;
     }
     bool canFinish(int n) {
-        unordered_set<int> visited, curVertices;
-        stack<int> dfsStack;
-        int cNum = 0;
-
         for (int i = 0; i < n; ++i) {
-            if (visited.find(i) != visited.end()) continue;
-
-            dfsStack.push(i);
-            curVertices.insert(i);
-
-            while (dfsStack.empty() == false) {
-                cNum = dfsStack.top();
-
-                vector<int>& preReqs = graph[cNum];
-                if (preReqs.size() == 0)
-                    updateInfo(cNum, visited, curVertices, dfsStack);
-                else {
-                    bool prereqsSatisfied = true;
-                    for (int pre: preReqs) {
-                        // is there a pre-req loop?
-                        if (curVertices.find(pre) != curVertices.end()) return false;
-                        if (visited.find(pre) == visited.end()) {
-                            dfsStack.push(pre);
-                            curVertices.insert(pre);
-                            prereqsSatisfied = false;
-                        }
-                    }
-                    if (prereqsSatisfied)
-                        updateInfo(cNum, visited, curVertices, dfsStack);
-                }
-            }
+            vertices = map<int, bool>();
+            path = unordered_set<int>();
+            bool b = dfs(i);
+            if (b == false) return false;
         }
+
         return true;
     }
 public:
@@ -105,8 +89,14 @@ public:
     }
 };
 
-
 void test0() {
+    std::vector<pair<int,int>> v = {};
+    Solution sol;
+    bool res = sol.canFinish(0, v);
+    assert(res == true);
+}
+
+void test0_1() {
     std::vector<pair<int,int>> v = {make_pair(0,1)};
     Solution sol;
     bool res = sol.canFinish(2, v);
@@ -149,13 +139,25 @@ void test5() {
     bool res = sol.canFinish(5,v);
     assert(res == true);
 }
+void test6() {
+    //8
+    // [[1,0],[2,6],[1,7],[6,4],[7,0],[0,5]]
+    std::vector<pair<int,int>> v = {make_pair(1,0), make_pair(2,6), 
+        make_pair(1,7),make_pair(6,4),make_pair(7,0), make_pair(0,5),
+        make_pair(7,4), make_pair(6,1), make_pair(4,6)};
+    Solution sol;
+    bool res = sol.canFinish(5,v);
+    assert(res == false);
+}
 
 int main() {
     test0();
+    test0_1();
     test1();
     test2();
     test3();
     test4();
     test5();
+    test6();
     return 0;
 }
