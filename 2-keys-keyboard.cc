@@ -38,6 +38,10 @@ public:
         			steps += primeFactors[i];
         			n /= primeFactors[i];
         		}
+        		if (std::binary_search (primes.begin(), primes.end(), n)) {
+        			steps += n;
+        			n = 0;
+        		}
         		if (n == 0) break;
         	}
         }
