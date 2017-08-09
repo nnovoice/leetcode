@@ -27,32 +27,42 @@ public:
 	    if (n < 3) return vv;
 	    std::sort(nums.begin(), nums.end());
 	    for (int i = 0; i + 2 < n; ++i) {
-	  	    int t = 0 - nums[i];
-            vector<int> twoSumPair = twoSum(nums, i + 1, t);
-            if (twoSumPair.size() != 0) {
-                vector<int> tv;
-                tv.push_back(nums[i]);
-                tv.push_back(twoSumPair[0]);
-                tv.push_back(twoSumPair[1]);
-                vv.push_back(tv);
-            }
+	       int t = 0 - nums[i];
+            	vector<vector<int>> twoSumPairVectors = twoSum(nums, i + 1, t);
+            	if (twoSumPairVectors.size() != 0) {
+              	vector<int> tv;
+                	
+                	for (vector<int> twoPairVec : twoSumPairVectors) {
+                    		tv.push_back(nums[i]);
+				tv.push_back(twoPairVec[0]);
+                    		tv.push_back(twoPairVec[1]);
+				vv.push_back(tv);
+	                	tv = vector<int>();
+    
+                	}
+           	}
  	    }	  
         return vv;
     }
 private:
-    vector<int> twoSum(vector<int>& nums, int start_idx, int target) {
+    vector<vector<int>> twoSum(vector<int>& nums, int start_idx, int target) {
         int n = nums.size();
-        std::vector<int> ret;
-        unordered_map<int, int> diffs;
-        int d = 0;
-        for (int i = start_idx; i < n; ++i) {
-            d = target - nums[i];
-            if (diffs.find(d) != diffs.end()) {
-                ret.push_back(diffs[d]);
-                ret.push_back(nums[i]);
-                return ret;
+        vector<std::vector<int>> ret;
+        vector<int> v;
+        int s = 0;
+        int i = start_idx;
+        int j = n - 1;
+        while (i < j) {
+            if (nums[i] > target) break;
+            s = nums[i] + nums[j];
+            if (s == target) {
+                v.push_back(nums[i]);
+                v.push_back(nums[j]);
+                ret.push_back(v);
+                v = vector<int>();
             }
-            diffs[nums[i]] = nums[i];
+            if (s < target) ++i;
+            else --j;
         }
         return ret;
     }
