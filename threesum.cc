@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <cassert>
 #include <unordered_set>
+#include <climits>
 using namespace std;
 
 class Solution {
@@ -50,7 +51,7 @@ vector<vector<int>> threeSum(vector<int>& nums) {
     vector<vector<int>> twoSum(vector<int>& nums, int start_idx, int target) {
         int n = nums.size();
         vector<std::vector<int>> ret;
-        vector<int> v;
+        vector<int> v(2, INT_MIN);
         int s = 0;
         int i = start_idx;
         int j = n - 1;
@@ -58,11 +59,12 @@ vector<vector<int>> threeSum(vector<int>& nums) {
             if (nums[i] > target) break;
             s = nums[i] + nums[j];
             if (s == target) {
-                v.push_back(nums[i]);
-                v.push_back(nums[j]);
-                ret.push_back(v);
-                v = vector<int>();
-            }
+                if (v.size() == 2 && (v[0] != nums[i] || v[1] != nums[j])) {  
+		    v[0] = nums[i];
+                    v[1] = nums[j];
+                    ret.push_back(v);
+            	}
+	    }
             if (s < target) ++i;
             else --j;
         }
@@ -122,6 +124,14 @@ vector<vector<int>> threeSum(vector<int>& nums) {
     }
 
 
+    void test6() {    
+    Solution s;
+    std::vector<int> v = {-1, 0, -1, 1, 1, 1, 2, -1, -4};
+    vector<std::vector<int>> v1 (s.threeSum(v));
+    printVector(v1);
+    //assert(v1.size() == 0);
+    }
+
     int main()
     {
     test1();
@@ -129,5 +139,6 @@ vector<vector<int>> threeSum(vector<int>& nums) {
     test3();   
     test4();
     test5();
+    test6();
     return 0;
     }
