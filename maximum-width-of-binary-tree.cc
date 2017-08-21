@@ -79,7 +79,7 @@ public:
         queue<pair<TreeNode*,int>> bfsQ;
         int width = 0, maxWidth = 0, curLevel = 0;
         pair<TreeNode*,int> node;
-        bfsQ.push(make_pair(root, 0));
+        bfsQ.push(make_pair(root, 1));
         
         while (bfsQ.empty() == false) {
         	node = bfsQ.front();
