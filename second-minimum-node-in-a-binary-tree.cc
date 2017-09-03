@@ -41,29 +41,22 @@ struct TreeNode {
 class Solution {
     set<int> values;
 private:
-    void buildSecondMinimumValue(TreeNode* root) {
-        if (root->left != nullptr && root->right != nullptr) {
-            buildSecondMinimumValue(root->left);
-            values.insert(root->val);
-            buildSecondMinimumValue(root->right);
-        }
-        else {
-            values.insert(root->val);
-        }
+    void buildValuesSet(TreeNode* root) {
+        if (root == nullptr) return;
+        values.insert(root->val);
+        buildValuesSet(root->left);
+        buildValuesSet(root->right);
     }  
-    int getSecondMaximum() {
+    int getSecondMinimum() {
         if (values.size() <= 1) return -1;
-        int i = 0;
-        for (std::set<int>::iterator it=values.begin(); it!=values.end(); ++it, ++i) {
-            if (i == 1) return *it;
-        }
-        return -1;
+        std::set<int>::iterator it = values.begin();
+        ++it;
+        return *it;
     }
 public:
     int findSecondMinimumValue(TreeNode* root) {
-        if (root == nullptr) return -1;
-        buildSecondMinimumValue(root);
-        return getSecondMaximum();
+        buildValuesSet(root);
+        return getSecondMinimum();
     }
 };
 
