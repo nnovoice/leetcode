@@ -76,41 +76,27 @@ class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
         if (root == nullptr) return 0;
-        queue<pair<TreeNode*,int>> bfsQ;
-        int width = 0, maxWidth = 0, curLevel = 0;
+        queue<pair<TreeNode*,int>> current, next;
         pair<TreeNode*,int> node;
-        bfsQ.push(make_pair(root, 1));
-        
-        while (bfsQ.empty() == false) {
-        	node = bfsQ.front();
-        	
-    		if (curLevel != node.second) {
-        		maxWidth = max(maxWidth, width);
-        		curLevel = node.second;
-        		width = 0;
+        current.push(make_pair(root, 1));
+        int maxWidth = 0, l = 0, r = 0, id = 0;
+        while (current.empty() == false) {
+        	node = current.front();
+        	l = node.second;
+        	r = l;
+        	while (current.empty() == false) {
+        		node = current.front();
+        		id = node.second;
+        		r = id;
+        		if (node.first->left) next.push(make_pair(node.first->left, 2 * id));
+        		if (node.first->right) next.push(make_pair(node.first->right, 2 * id + 1));
+        		current.pop();
         	}
-
-        	int nNullNodes = 0;
-        	while (bfsQ.empty() == false && curLevel == node.second) {
-        		node = bfsQ.front();
-        		if (node.first != nullptr) {
-        			bfsQ.push(make_pair(node.first->left, node.second+1));
-        			bfsQ.push(make_pair(node.first->right, node.second+1));
-        			if (width != 0) {
-        				width += nNullNodes;
-        				nNullNodes = 0;
-        			}
-        			width += 1;
-        		}
-        		else {
-        			if (width != 0) {
-        				nNullNodes += 1;;
-        			}
-        		}
-        		bfsQ.pop();
-        	}
+        	maxWidth = max(maxWidth, r + 1 - l);
+        	swap(current, next);
         }
-    	return max(maxWidth, width);   
+        cout << maxWidth << endl;
+    	return maxWidth;   
     }
 };
 
@@ -156,7 +142,7 @@ void test3() {
 
 	int res = sol.widthOfBinaryTree(root);
 	cout << "test3=" << res << endl;
-	//assert (res == 1);
+	assert (res == 1);
 }
 
 void test4() {
@@ -195,7 +181,7 @@ void test5() {
 
 	int res = sol.widthOfBinaryTree(root);
 	cout << "test5=" << res << endl;
-	//assert (res == 2);
+	assert (res == 2);
 }
 
 void test6() {
@@ -219,7 +205,7 @@ void test6() {
 
 	int res = sol.widthOfBinaryTree(root);
 	cout << "test6=" << res << endl;
-	//assert (res == 4);
+	assert (res == 4);
 }
 
 void test7() {
