@@ -21,9 +21,8 @@ using namespace std;
 
 class Solution {
 private:
-    bool validPalindrome(string s, int l, int r) {
+    bool validPalindrome(string s, int l, int r, int nMismatches) {
         char a = ' ', b = ' ';
-        int nMismatches = 0;
         bool isValid = true;
         while (l < r) {
             a = s[l];
@@ -31,15 +30,16 @@ private:
             //cout << s[l] << " " << s[r] << endl;
             if (a != b) {
                 ++nMismatches;
+                if (nMismatches > 1) return false;
                 if (s[l+1] == s[r])  {
                     ++l;
-                    isValid = validPalindrome(s, l, r);
+                    isValid = validPalindrome(s, l, r, nMismatches);
                     if (isValid == false) --l;
                     else return true;
                 }
                 if (s[l] == s[r-1]) {
                     --r;
-                    isValid = validPalindrome(s, l, r);
+                    isValid = validPalindrome(s, l, r, nMismatches);
                     if (isValid == false) return false;
                 }
                 else ++nMismatches;
@@ -54,7 +54,7 @@ private:
     }
 public:
     bool validPalindrome(string s) {
-        return validPalindrome(s, 0, s.length() - 1);
+        return validPalindrome(s, 0, s.length() - 1, 0);
     }
     
 };
@@ -99,6 +99,11 @@ void test7() {
     assert(s.validPalindrome("aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuculmgmqfvnbgtapekouga") == true);
 }
 
+void test8() {
+    Solution s;
+    assert (s.validPalindrome("eeccccbebaeeabebccceea") == false);
+}
+
 int main() {
 	test0();
 	test1();
@@ -108,5 +113,6 @@ int main() {
 	test5();
 	test6();
     test7();
+    test8();
 	return 0;
 }
