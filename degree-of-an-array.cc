@@ -40,13 +40,13 @@ private:
     unordered_map<int,pair<int,int>> span;
     priority_queue<pair<int,int>, vector<pair<int,int>>, compare> maxHeap;
 public:
-    vector<int> findShortestSubArray(vector<int>& nums) {
+    int findShortestSubArray(vector<int>& nums) {
         for (int i = 0; i < nums.size(); ++i) {
             counts[nums[i]] += 1;
             if (span.find(nums[i]) != span.end())
                 span[nums[i]].second = i;
             else
-                span.insert(nums[i], make_pair(i, i));
+                span[nums[i]] = make_pair(i, i);
         }
 
         for (unordered_map<int,int>::iterator iter = counts.begin(); iter != counts.end(); ++iter)
@@ -68,7 +68,7 @@ public:
             prevElem = elem;
             maxHeap.pop();
         }
-        return (minSpan.second - minSpan.first);
+        return (minSpan.second - minSpan.first + 1);
     }
 };
 
@@ -84,43 +84,74 @@ void test0() {
     Solution s;
     std::vector<int> v1 = {1};
     printVector(v1);
-    vector<int> topKElements = s.topKFrequent(v1, 1);
-    printVector(topKElements);
-    assert(topKElements[0] == 1);
+    int degree = s.findShortestSubArray(v1);
+    assert(degree == 1);
 }
 
 void test1() {
     Solution s;
     std::vector<int> v1 = {1,2,3,4,5,1,0,0,0,0,0};
     printVector(v1);
-    vector<int> topKElements = s.topKFrequent(v1, 2);
-    printVector(topKElements);
-    assert(topKElements[0] == 0 && topKElements[1] == 1);
+    int degree = s.findShortestSubArray(v1);
+    assert(degree == 5);
 }
 
 void test2() {
     Solution s;
-    std::vector<int> v1 = {1,3,5,7,9,0,0,0,0,0,9,9,9,1};
+    std::vector<int> v1 = {9,9,1,3,5,7,9,0,0,0,0,0,9,9,1};
     printVector(v1);
-    vector<int> topKElements = s.topKFrequent(v1, 3);
-    printVector(topKElements);
-    assert(topKElements[0] == 0 && topKElements[1] == 9 && topKElements[2] == 1);
+    int degree = s.findShortestSubArray(v1);
+    assert(degree == 5);
 }
 
 void test3() {
     Solution s;
     std::vector<int> v1 = {1,1,1,2,2,3};
     printVector(v1);
-    vector<int> topKElements = s.topKFrequent(v1, 2);
-    printVector(topKElements);
-    assert(topKElements[0] == 1 && topKElements[1] == 2);
+    int degree = s.findShortestSubArray(v1);
+    assert(degree == 3);
 }
 
+void test4() {
+    Solution s;
+    std::vector<int> v1 = {9,9,1,3,5,7,9,0,9,0,0,0,0,9,9,9,1};
+    printVector(v1);
+    int degree = s.findShortestSubArray(v1);
+    assert(degree == 16);
+}
+
+void test5() {
+    Solution s;
+    std::vector<int> v1 = {1,2,1,2,1,2,1,2,1,2,1,2};
+    printVector(v1);
+    int degree = s.findShortestSubArray(v1);
+    assert(degree == 11);
+}
+
+void test6() {
+    Solution s;
+    std::vector<int> v1 = {1,2,2,3,1,4,2};
+    printVector(v1);
+    int degree = s.findShortestSubArray(v1);
+    assert(degree == 6);
+}
+//[1,2,2,1,2,1,1,1,1,2,2,2]
+void test7() {
+    Solution s;
+    std::vector<int> v1 = {1,2,2,1,2,1,1,1,1,2,2,2};
+    printVector(v1);
+    int degree = s.findShortestSubArray(v1);
+    assert(degree == 9);
+}
 int main()
 {
     test0();
     test1();
     test2();
     test3();
+    test4();
+    test5();
+    test6();
+    test7();
     return 0;
 }
