@@ -39,51 +39,68 @@ private:
     unordered_map<int,int> counts;
     unordered_map<int,pair<int,int>> span;
     priority_queue<pair<int,int>, vector<pair<int,int>>, compare> maxHeap;
-public:
-    int findShortestSubArray(vector<int>& nums) {
+
+private:
+    void updateCounts(vector<int>& nums) {
         for (int i = 0; i < nums.size(); ++i) {
             counts[nums[i]] += 1;
+        }
+    }
+    void updateSpans(vector<int>& nums) {
+        for (int i = 0; i < nums.size(); ++i) {
             if (span.find(nums[i]) != span.end())
                 span[nums[i]].second = i;
             else
                 span[nums[i]] = make_pair(i, i);
         }
-
+    }
+    void createMaxHeap() {
         for (unordered_map<int,int>::iterator iter = counts.begin(); iter != counts.end(); ++iter)
             maxHeap.push(make_pair(iter->first, iter->second));
+    }
 
-        pair<int,int> prevElem = make_pair(INT_MIN, INT_MIN);
+    int getDegree() {
         pair<int,int> elem = maxHeap.top();
-        pair<int,int> curSpan = make_pair(0, INT_MAX), minSpan = span[elem.first];
+        int maxFreq = elem.second;
+        pair<int,int> curSpan = make_pair(0, INT_MAX);
+        pair<int,int> minSpan = span[elem.first];
 
-        for (int i = 0; i < maxHeap.size(); ++i) {
+        while (maxHeap.empty() == false) {
             elem = maxHeap.top();
-            if (elem.second < prevElem.second) break;
+
+            if (elem.second < maxFreq) {
+                break;
+            }
 
             curSpan = span[elem.first];
 
-            if ((curSpan.second - curSpan.first) < (minSpan.second - minSpan.first))
+            if ((curSpan.second - curSpan.first) < (minSpan.second - minSpan.first)) {
                 minSpan = curSpan;
+            }
 
-            prevElem = elem;
             maxHeap.pop();
         }
+
+        // add 1 because indices are stored. Count needs to be derived by adding 1
         return (minSpan.second - minSpan.first + 1);
     }
-};
 
-void printVector(std::vector<int>& v) {
-    cout << "printVector\n";
-    for (size_t i = 0; i < v.size(); ++i) {
-        cout << v[i] << " ";
+public:
+    int findShortestSubArray(vector<int>& nums) {
+        updateCounts(nums);
+
+        updateSpans(nums);
+
+        createMaxHeap();
+
+        return getDegree();
     }
-    cout << endl;
-}
+};
 
 void test0() {
     Solution s;
     std::vector<int> v1 = {1};
-    printVector(v1);
+    
     int degree = s.findShortestSubArray(v1);
     assert(degree == 1);
 }
@@ -91,7 +108,7 @@ void test0() {
 void test1() {
     Solution s;
     std::vector<int> v1 = {1,2,3,4,5,1,0,0,0,0,0};
-    printVector(v1);
+    
     int degree = s.findShortestSubArray(v1);
     assert(degree == 5);
 }
@@ -99,7 +116,7 @@ void test1() {
 void test2() {
     Solution s;
     std::vector<int> v1 = {9,9,1,3,5,7,9,0,0,0,0,0,9,9,1};
-    printVector(v1);
+    
     int degree = s.findShortestSubArray(v1);
     assert(degree == 5);
 }
@@ -107,7 +124,7 @@ void test2() {
 void test3() {
     Solution s;
     std::vector<int> v1 = {1,1,1,2,2,3};
-    printVector(v1);
+    
     int degree = s.findShortestSubArray(v1);
     assert(degree == 3);
 }
@@ -115,7 +132,7 @@ void test3() {
 void test4() {
     Solution s;
     std::vector<int> v1 = {9,9,1,3,5,7,9,0,9,0,0,0,0,9,9,9,1};
-    printVector(v1);
+    
     int degree = s.findShortestSubArray(v1);
     assert(degree == 16);
 }
@@ -123,7 +140,7 @@ void test4() {
 void test5() {
     Solution s;
     std::vector<int> v1 = {1,2,1,2,1,2,1,2,1,2,1,2};
-    printVector(v1);
+    
     int degree = s.findShortestSubArray(v1);
     assert(degree == 11);
 }
@@ -131,18 +148,19 @@ void test5() {
 void test6() {
     Solution s;
     std::vector<int> v1 = {1,2,2,3,1,4,2};
-    printVector(v1);
+    
     int degree = s.findShortestSubArray(v1);
     assert(degree == 6);
 }
-//[1,2,2,1,2,1,1,1,1,2,2,2]
+
 void test7() {
     Solution s;
     std::vector<int> v1 = {1,2,2,1,2,1,1,1,1,2,2,2};
-    printVector(v1);
+
     int degree = s.findShortestSubArray(v1);
     assert(degree == 9);
 }
+
 int main()
 {
     test0();
