@@ -27,7 +27,9 @@ public:
         int n = s.length();
         if (n == 0) return 0;
         int len = 0;
-        for (int i = n - 1; i >= 0 && s[i] != ' '; --i) {
+        int i = n - 1;
+        while (i >= 0 && s[i] == ' ') --i;
+        for (; i >= 0 && s[i] != ' '; --i) {
             ++len;
         }
         return len;
@@ -45,7 +47,7 @@ void test2() {
     Solution s;
     string str = "Hello, ";
     int len = s.lengthOfLastWord(str);
-    assert(len == 0);
+    assert(len == 6);
 }
 
 void test3() {
@@ -69,6 +71,19 @@ void test5() {
     assert(len == 6);
 }
 
+void test6() {
+    Solution s;
+    string str = "a ";
+    int len = s.lengthOfLastWord(str);
+    assert(len == 1);
+}
+
+void test7() {
+    Solution s;
+    string str = "      ";
+    int len = s.lengthOfLastWord(str);
+    assert(len == 0);
+}
 
 int main()
 {
@@ -77,5 +92,7 @@ int main()
     test3();
     test4();
     test5();
+    test6();
+    test7();
     return 0;
 }
