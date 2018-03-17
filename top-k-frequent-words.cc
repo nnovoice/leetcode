@@ -61,7 +61,7 @@ public:
         vector<string> currentElements;
         int freq = maxHeap.top().second;
         pair<string, int> elem;
-        for (int i = 0; i < k; ++i) {
+        while (maxHeap.empty() == false) {
             elem = maxHeap.top();
             if (elem.second != freq) {
                 sort(begin(currentElements), end(currentElements));
@@ -76,7 +76,7 @@ public:
             sort(begin(currentElements), end(currentElements));
             topKElements.insert(std::end(topKElements), std::begin(currentElements), std::end(currentElements));
         }
-        return topKElements;
+        return vector<string>(begin(topKElements), begin(topKElements) + k);
     }
 };
 
