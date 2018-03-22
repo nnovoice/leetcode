@@ -15,13 +15,16 @@ Example: 19 is a happy number
 */
 #include <vector>
 #include <cassert>
+#include <iostream>
 using namespace std;
 
 class Solution {
 public:
     bool isHappy(int n) {
         int sumSquares = 0, digit = 0, t = 0;
-        while (n < 10) {
+        while (n > 9) {
+            //if (n == 1) break;
+            cout << n << " ";
             t = n;
             sumSquares = 0;
             while (t != 0) {
@@ -31,9 +34,19 @@ public:
             }
             n = sumSquares;
         }
-        return (n == 1) ? true : false;
+        // cout << endl;
+        return (n == 1 || n == 7) ? true : false;
     }
 };
+
+void experiment0() {
+    Solution sol;
+    bool happy = false;
+    for (int i = 0; i <= 10000; ++i) {
+        happy = sol.isHappy(i);
+        cout << "i= " << i << " isHappy=" << happy << endl;
+    }
+}
 
 void test0() {
     Solution s;
@@ -49,7 +62,8 @@ void test1() {
 }
 
 int main() {
-    test0();
-    test1();
+    experiment0();
+//    test0();
+//    test1();
     return 0;
 }
