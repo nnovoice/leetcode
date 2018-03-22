@@ -19,9 +19,9 @@ using namespace std;
 class Solution {
 public:
     bool isUgly(int num) {
-        if (num < 0) {
-            num = 0 - num;
-        }
+//        if (num < 0) {
+//            num = 0 - num;
+//        }
 
         vector<int> factors = {2, 3, 5};
         for (int i = 0; i < factors.size(); ++i) {
