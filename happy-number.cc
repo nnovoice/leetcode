@@ -24,7 +24,7 @@ public:
         int sumSquares = 0, digit = 0, t = 0;
         while (n > 9) {
             //if (n == 1) break;
-            cout << n << " ";
+            //cout << n << " ";
             t = n;
             sumSquares = 0;
             while (t != 0) {
@@ -62,8 +62,8 @@ void test1() {
 }
 
 int main() {
-    experiment0();
-//    test0();
-//    test1();
+    //experiment0();
+    test0();
+    test1();
     return 0;
 }
