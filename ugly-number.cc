@@ -19,10 +19,6 @@ using namespace std;
 class Solution {
 public:
     bool isUgly(int num) {
-//        if (num < 0) {
-//            num = 0 - num;
-//        }
-
         vector<int> factors = {2, 3, 5};
         for (int i = 0; i < factors.size(); ++i) {
             while ((num > 1) && (num % factors[i] == 0)) {
@@ -30,7 +26,7 @@ public:
                 //cout << " " << num;
             }
         }
-        return (num == 1) ? true : false;
+        return (num == 1);
     }
 };
 
