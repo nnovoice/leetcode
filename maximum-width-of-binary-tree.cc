@@ -95,7 +95,7 @@ public:
         	maxWidth = max(maxWidth, r + 1 - l);
         	swap(current, next);
         }
-        cout << maxWidth << endl;
+        //cout << maxWidth << endl;
     	return maxWidth;   
     }
 };

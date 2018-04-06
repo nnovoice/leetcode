@@ -23,7 +23,40 @@ using namespace std;
 
 class Solution {
 public:
-    int largestRectangleArea(vector<int>& heights) {
+	int largestRectangleArea(vector<int>& heights) {
+		int n = heights.size();
+		if (n == 0) return 0;
+		
+		vector<int> minHeights (n);
+		vector<int> bars(n);
+		int area1 = 0, area2 = 0, maxArea = 0;
+		minHeights[0] = heights[0];
+		bars[0] = 1;
+		maxArea = minHeights[0] * bars[0];
+		for (int i = 1; i < n; ++i) {
+			cout << minHeights[i-1] << "," << bars[i-1] << endl;
+			if (heights[i] == 0) {
+				minHeights[i] = bars[i] = 0;
+			}
+			else {
+				if (minHeights[i - 1] > 0) {
+					minHeights[i] = (heights[i] < minHeights[i-1]) ? heights[i] : minHeights[i-1];
+					bars[i] = bars[i-1] + 1;
+					area1 = minHeights[i] * bars[i];
+				}
+					
+				area2 = heights[i] * 1;
+				if (area2 >= area1) {
+					minHeights[i] = heights[i];
+					bars[i] = 1;	
+				}
+				maxArea = max(maxArea, max(area1,area2));
+			}
+		}
+		return maxArea;
+	}
+	
+    int largestRectangleAreaBruteforce(vector<int>& heights) {
         int maxArea = 0, curArea = 0, minHeight = 0, nBars = 0;
         int n = heights.size();
         for (int i = 0; i < n; ++i) {
@@ -94,6 +127,14 @@ public:
     cout << res << endl;
     assert(res == 16);
     }
+    
+    void test7() {    
+    Solution s;
+    std::vector<int> v = {0,1,2,3,4,5,6,7,8};
+    int res = s.largestRectangleArea(v);
+    cout << res << endl;
+    assert(res == 20);
+    }
 
     int main()
     {
@@ -102,6 +143,7 @@ public:
     test3();   
     test4();
     test5();
-    test6();
+    //test6();
+    test7();
     return 0;
     }

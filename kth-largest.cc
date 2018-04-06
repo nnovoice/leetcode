@@ -36,21 +36,21 @@ class Solution {
 private:
     struct compare {
 		bool operator() (const int l, const int r) {
-			return l > r;
+			return l < r;
 		}
 	};
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        priority_queue<int, vector<int>, compare> minHeap;
+        priority_queue<int, vector<int>, compare> maxHeap;
         for (int i = 0; i < nums.size(); ++i) {
-            minHeap.push(nums[i]);
+            maxHeap.push(nums[i]);
         }
 
-        int kth = minHeap.top();
+        int kth = maxHeap.top();
         for (int i = 0; i < k; ++i) {
-            kth = minHeap.top();
+            kth = maxHeap.top();
             //cout << "kth=" << kth << " ";
-            minHeap.pop();
+            maxHeap.pop();
         }
         //cout << "k=" << k << " kth=" << kth << endl;
         return kth;
@@ -71,7 +71,7 @@ void test1() {
     printVector(v1);
     int tm = s.findKthLargest(v1, 5);
     printVector(v1);
-    assert(tm == 3);
+    assert(tm == 4);
 }
 
 void test2() {
@@ -80,7 +80,7 @@ void test2() {
     printVector(v1);
     int tm = s.findKthLargest(v1, 7);
     printVector(v1);
-    assert(tm == 3);
+    assert(tm == 0);
 }
 
 void test3() {
@@ -98,7 +98,7 @@ void test4() {
     printVector(v1);
     int tm = s.findKthLargest(v1, 2);
     printVector(v1);
-    assert(tm == 2);
+    assert(tm == 1);
 }
 
 void test5() {
